@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../redux/Redusers";
 
 interface Iprops {
@@ -11,6 +11,8 @@ interface Iprops {
 }
 const Card = ({ product }: Iprops) => {
   const dispatch = useDispatch();
+  // const cart = useSelector((state: any) => state.cart);
+  // console.log(cart)
   return (
     <div className="card">
       <div className="image_container">
