@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
-import type { IProduct } from "../../interface";
+import type { ICartItem, IProduct } from "../../interface";
 
 const DropDown = () => {
-  const cartItems = useSelector((state: IProduct) => state.cart.cartItems);
+  const cartItems = useSelector((state: ICartItem) => state.cart.cartItems);
   console.log(cartItems);
+
   return (
     <div>
       <button
@@ -27,9 +28,9 @@ const DropDown = () => {
         role="menu"
         data-popover="cart-menu"
         data-popover-placement="bottom"
-        className=" bg-scroll hidden absolute z-10 min-w-[180px] overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-lg shadow-sm focus:outline-none"
+        className=" hidden absolute z-10 min-w-[180px] max-h-50 overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-lg shadow-sm focus:outline-none"
       >
-        {cartItems &&
+        {cartItems.length ? (
           cartItems.map((item: IProduct) => {
             return (
               <li
@@ -58,13 +59,17 @@ const DropDown = () => {
                       <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z" />
                       <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
                     </svg>
-                    ${item.price}
+                    {item.quantity} x {item.price}
                   </p>
                 </div>
               </li>
             );
-          })}
-        //
+          })
+        ) : (
+          <li className="cursor-pointer text-red-500 flex w-full text-sm items-center rounded-md p-3 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100">
+            Your cart is empty
+          </li>
+        )}
       </ul>
     </div>
   );
