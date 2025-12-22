@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import type { ICartItem, IProduct } from "../../interface";
 
 const DropDown = () => {
+  // Define the shape of your root state to match your Redux store
   const cartItems = useSelector((state: ICartItem) => state.cart.cartItems);
   console.log(cartItems);
 

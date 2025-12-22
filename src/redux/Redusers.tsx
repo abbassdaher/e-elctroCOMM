@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { IProduct } from "../interface";
 
 interface cartState {
-            cartItems: IProduct[];
+  cartItems: IProduct[];
 }
 
 // Define the initial state using that type
@@ -15,19 +15,22 @@ export const cartSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-//     increment: (state) => {
-            //     decrement: (state) => {
-                        //       state.value += 1;
-            //       state.value -= 1;
-            //     },
-            //     },
     addToCart: (state, action) => {
-      const existingItem = state.cartItems.find((item) => item.id === action.payload.id);
+      const existingItem = state.cartItems.find(
+        (item) => item.id === action.payload.id
+      );
       if (existingItem) {
-        existingItem.quantity += 1;
+        state.cartItems = [
+          { ...existingItem, quantity: existingItem.quantity + 1 },
+          ...state.cartItems.filter((item) => item.id !== existingItem.id),
+        ];
       } else {
-        state.cartItems.push({ ...action.payload, quantity: 1 });
+        state.cartItems = [
+          ...state.cartItems,
+          { ...action.payload, quantity: 1 },
+        ];
       }
+      //         state.cartItems.push({ ...action.payload, quantity: 1 });
     },
   },
 });

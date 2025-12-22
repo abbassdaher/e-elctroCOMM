@@ -7,7 +7,9 @@ export interface IProduct {
                     
 }
 export interface ICartItem {
-           cart: IProduct[];
+           cart: {
+            cartItems: IProduct[];
+           };
             quantity: number;
             
 }
