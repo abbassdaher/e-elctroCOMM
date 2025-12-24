@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import type { ICartItem, IProduct } from "../../interface";
+import { Badge } from "@material-tailwind/react";
 
 const DropDown = () => {
   // Define the shape of your root state to match your Redux store
@@ -8,23 +9,30 @@ const DropDown = () => {
 
   return (
     <div>
-      <button
-        data-popover-target="cart-menu"
-        className=" rounded-md border border-transparent  text-center text-sm  text-slate-600 hover:bg-slate-100  active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        type="button"
-        onClick={(e) => {
-          e.currentTarget.nextElementSibling?.classList.toggle("hidden");
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="red"
-          className="w-7 h-7 pointer-events-none"
+      <div>
+        <button
+          data-popover-target="cart-menu"
+          className=" rounded-md border border-transparent  text-center text-sm  text-slate-600 hover:bg-slate-100  active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          type="button"
+          onClick={(e) => {
+            e.currentTarget.nextElementSibling?.classList.toggle("hidden");
+          }}
         >
-          <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="red"
+            className="w-7 h-7 pointer-events-none"
+          >
+            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
+          </svg>
+        </button>
+        <span className="bg-gray-200 rounded-full -ml-3 -mt-3 px-1.5 py-0.5 text-xs font-semibold text-red-600">
+          {cartItems.length}
+          
+        </span>
+      </div>
+
       <ul
         role="menu"
         data-popover="cart-menu"
