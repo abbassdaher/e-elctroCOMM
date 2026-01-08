@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import DropDown from "./DropDown";
 
 const NavBar = () => {
+  
   // const cartItemsCount = useSelector((state: { addToCart: { value: number } }) => state.addToCart.value);
   return (
     <Fragment>

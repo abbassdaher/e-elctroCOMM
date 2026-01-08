@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/Redusers";
 
 interface Iprops {
@@ -11,8 +11,7 @@ interface Iprops {
 }
 const Card = ({ product }: Iprops) => {
   const dispatch = useDispatch();
-  // const cart = useSelector((state: any) => state.cart);
-  // console.log(cart)
+
   return (
     <div className="card">
       <div className="image_container">
@@ -53,7 +52,10 @@ const Card = ({ product }: Iprops) => {
         <div className="price  ">
           <span>${product.price}</span>
         </div>
-        <button className="cart-button" onClick={() => dispatch(addToCart(product))}>
+        <button
+          className="cart-button"
+          onClick={() => dispatch(addToCart(product))}
+        >
           <svg
             className="cart-icon"
             stroke="currentColor"
