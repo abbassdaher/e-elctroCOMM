@@ -13,7 +13,7 @@ export interface ICartItem {
 }
 
 export interface IProductsState {
-  products: IProduct[];
+  data: { products: IProduct[] };
   loading: boolean;
   error: string | null;
 }
