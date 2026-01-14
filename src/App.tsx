@@ -7,6 +7,7 @@ import { store } from "./redux/Store";
 import NavBar from "./components/ui/NavBar";
 import AboutPages from "./pages/AboutPages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProductInfo from "./pages/ProductInfo";
 
 function App() {
   const queryClient = new QueryClient();
@@ -17,8 +18,9 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <NavBar />
           <Routes>
-            <Route path="/about" element={<AboutPages />} />
             <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPages />} />
+            <Route path="product/:id" element={<ProductInfo />} />
           </Routes>
         </QueryClientProvider>
       </Provider>

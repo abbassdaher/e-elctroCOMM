@@ -1,12 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/Redusers";
+import { Link } from "react-router-dom";
 
 interface Iprops {
   product: {
     brand: string;
     images: string[];
     price: number;
+    id: number;
   };
 }
 const Card = ({ product }: Iprops) => {
@@ -14,18 +16,20 @@ const Card = ({ product }: Iprops) => {
 
   return (
     <div className="card">
-      <div className="image_container">
-        <svg
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          className="image bg-light"
-        >
-          <image href={product.images[0]} height="100%" width="100%" />
-        </svg>
-      </div>
-      <div className="title">
-        <span>{product.brand}</span>
-      </div>
+      <Link to={`product/${product.id}`}>
+        <div className="image_container">
+          <svg
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            className="image bg-light"
+          >
+            <image href={product.images[0]} height="100%" width="100%" />
+          </svg>
+        </div>
+        <div className="title">
+          <span>{product.brand}</span>
+        </div>
+      </Link>
       {/* size */}
       {/* <div className="size">
         <span>Size</span>

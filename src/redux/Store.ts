@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import  cartSlice  from "./Redusers"; // export const store = configureStore({
-import productsSlice from "./products/productsSlice";
+import { ProductsList } from "./RTKQuery/ProductsList";
+// import productsSlice from "./products/productsSlice";
 //   reducer: {
 //     addToCart: addToCartReducer,
 //
@@ -9,8 +10,11 @@ import productsSlice from "./products/productsSlice";
 export const store = configureStore({
   reducer: {
     cart: cartSlice,
-    products: productsSlice,
+    // products:productsSlice,
+    [ProductsList.reducerPath]: ProductsList.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(ProductsList.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

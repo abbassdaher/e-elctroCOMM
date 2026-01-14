@@ -8,6 +8,10 @@ export const ProductsList = createApi({
     getProductsList: build.query({
       query: () => `/products`,
     }),
+    getProductById: build.query({
+      query: (id: number) => `/products/${id}`,
+    }),
+    
   }),
 });
 

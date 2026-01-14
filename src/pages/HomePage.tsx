@@ -1,19 +1,21 @@
-import { Fragment, memo, useEffect } from "react";
+import { Fragment, memo } from "react";
 // import { useQuery } from "@tanstack/react-query";
 import Card from "../components/ui/card/Card";
 import type { IProduct } from "../interface";
-import { useDispatch, useSelector } from "react-redux";
-import { getProductsList } from "../redux/products/productsSlice";
-import type { AppDispatch, RootState } from "../redux/Store";
+// import { useDispatch, useSelector } from "react-redux";
+// import type { AppDispatch, RootState } from "../redux/Store";
+import { useGetProductsListQuery } from "../redux/RTKQuery/ProductsList";
 
 const HomePage = () => {
-  const { data, loading } = useSelector(({ products }: RootState) => products);
-  const dispatch = useDispatch<AppDispatch>();
+  // const { data, loading } = useSelector(({ products }: RootState) => products);
+  const { data, isLoading } = useGetProductsListQuery({});
+  // const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    dispatch(getProductsList());
-  }, [dispatch]);
-  if (loading) return <div className="text-center text-light">Loading...</div>;
+  // useEffect(() => {
+  //   dispatch(getProductsList());
+  // }, [dispatch]);
+  if (isLoading)
+    return <div className="text-center text-light">Loading...</div>;
   // useQuery
   // const { isPending, error, data } = useQuery({
   //   queryKey: ["products"],
