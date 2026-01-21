@@ -1,7 +1,7 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/Redusers";
 import { Link } from "react-router-dom";
+import { clickedOnProduct } from "../../../redux/Slices/ClickedOnProductSlice";
 
 interface Iprops {
   product: {
@@ -17,7 +17,10 @@ const Card = ({ product }: Iprops) => {
   return (
     <div className="card">
       <Link to={`product/${product.id}`}>
-        <div className="image_container">
+        <div
+          className="image_container"
+          onClick={() => dispatch(clickedOnProduct(product))}
+        >
           <svg
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"

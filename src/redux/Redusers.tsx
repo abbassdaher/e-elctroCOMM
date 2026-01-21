@@ -34,10 +34,22 @@ export const cartSlice = createSlice({
       }
       //         state.cartItems.push({ ...action.payload, quantity: 1 });
     },
+    removeFromCart: (state, action) => {
+      state.cartItems = state.cartItems.filter(
+        (item) => item.id !== action.payload.id
+      );
+    },
+    // getProductInfo: (state, action) => {
+    //   const productInfo = state.cartItems.find(
+    //     (item) => item.id === action.payload.id
+    //   );
+    //   return productInfo;
+    // }
+
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const cartSelector = ({ cart }: RootState) => cart.cartItems;
