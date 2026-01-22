@@ -2,12 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import  cartSlice  from "./Redusers"; // export const store = configureStore({
 import { ProductsList } from "./RTKQuery/ProductsList";
 import ClickedOnProductSlice from "./Slices/ClickedOnProductSlice";
-// import productsSlice from "./products/productsSlice";
-//   reducer: {
-//     addToCart: addToCartReducer,
-//
-//   },
-// })
+
 export const store = configureStore({
   reducer: {
     cart: cartSlice,

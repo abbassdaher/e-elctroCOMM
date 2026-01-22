@@ -10,7 +10,7 @@ const NavBar = () => {
     <Fragment>
       <div className="navbar flex flex-row  justify-around ">
         <h1 className="font-bold">
-          <Link to="/">E-ElctroCOMM</Link>
+          <Link to="/">E-Beauty</Link>
         </h1>
 
         <ul className="flex flex-row justify-content-center gap-4 cursor-pointer">
@@ -20,7 +20,8 @@ const NavBar = () => {
           <li>
             <Link to="/about">About</Link>
           </li>
-          <li>Login</li>
+
+          <li><Link to="/signIn-Up">Login</Link></li>
         </ul>
       </div>
     </Fragment>

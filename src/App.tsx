@@ -10,6 +10,7 @@ import AboutPages from "./pages/AboutPages";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductInfo from "./pages/ProductInfo";
+import SignInSignUp from "./pages/SignInSignUp";
 
 function App() {
   const queryClient = new QueryClient();
@@ -25,6 +26,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPages />} />
               <Route path="product/:id" element={<ProductInfo />} />
+              <Route path="/signIn-Up" element={<SignInSignUp />} />
+
             </Routes>
           </QueryClientProvider>
         </Provider>

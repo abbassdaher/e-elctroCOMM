@@ -35,9 +35,20 @@ export const cartSlice = createSlice({
       //         state.cartItems.push({ ...action.payload, quantity: 1 });
     },
     removeFromCart: (state, action) => {
-      state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload.id
+      const existingItem = state.cartItems.find(
+        (item) => item.id === action.payload.id
       );
+      if (existingItem && existingItem.quantity > 1) {
+        state.cartItems = [
+          { ...existingItem, quantity: existingItem.quantity - 1 },
+          ...state.cartItems.filter((item) => item.id !== existingItem.id),
+        ];
+      }
+      else {
+        state.cartItems = state.cartItems.filter(
+          (item) => item.id !== action.payload.id
+        );
+      }
     },
     // getProductInfo: (state, action) => {
     //   const productInfo = state.cartItems.find(

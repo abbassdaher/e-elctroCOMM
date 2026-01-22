@@ -30,7 +30,7 @@ const HomePage = () => {
   return (
     <Fragment>
       {/* <NavBar /> */}
-      <div className="grid sm:grid-cols-3 md:grid-cols-3  lg:grid-cols-4 mt-10">
+      <div className="grid sm:grid-cols-3 md:grid-cols-3  lg:grid-cols-4 mt-10 gap-3">
         {/*  useQuery */}
         {/* {data &&
           data.products &&

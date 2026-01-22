@@ -15,7 +15,7 @@ const Card = ({ product }: Iprops) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="card">
+    <div className="card ">
       <Link to={`product/${product.id}`}>
         <div
           className="image_container"

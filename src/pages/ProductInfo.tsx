@@ -1,14 +1,36 @@
-import { Badge, Box, Button, Card, HStack, Image } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import type { IProduct } from "@/interface";
+import { addToCart } from "../redux/Redusers";
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Card,
+  For,
+  HStack,
+  Image,
+  RatingGroup,
+  Stack,
+} from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { Fragment } from "react/jsx-runtime";
 
 function ProductInfo() {
   const product = useSelector(
-    (state: { clickedOnProduct: { product: [] } }) =>
+    (state: { clickedOnProduct: { product: IProduct } }) =>
       state.clickedOnProduct.product
   );
+  const dispatch = useDispatch();
+
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-800">
-      <Card.Root flexDirection="row" overflow="hidden" maxW="xl">
+    <Fragment>
+      <Card.Root
+        flexDirection="row"
+        overflow="hidden"
+        maxW="xxl"
+        justifyContent={"Center"}
+        mb="10"
+      >
         <Image
           objectFit="contain"
           maxW="200px"
@@ -26,16 +48,70 @@ function ProductInfo() {
                     {tag}
                   </Badge>
                 ))}
-              {/* <Badge>Hot</Badge>
-              <Badge>Caffeine</Badge> */}
             </HStack>
+            <Card.Title
+              color={
+                product.availabilityStatus === "In Stock" ? "green" : "red"
+              }
+            >
+              {product.availabilityStatus}
+            </Card.Title>
           </Card.Body>
           <Card.Footer>
-            <Button>Buy Latte</Button>
+            price: ${product.price}{" "}
+            <Button
+              onClick={() => {
+                dispatch(addToCart(product));
+              }}
+            >
+              Add To Cart
+            </Button>{" "}
+            <RatingGroup.Root count={5} defaultValue={product.rating} size="sm">
+              <RatingGroup.HiddenInput />
+              <RatingGroup.Control />
+            </RatingGroup.Root>
           </Card.Footer>
         </Box>
       </Card.Root>
-    </div>
+      <h2>Reviews:</h2>
+      <Stack
+        gap="1"
+        direction="row"
+        wrap="wrap"
+        justify="center"
+        w="full"
+        mt={10}
+      >
+        <For each={product.reviews}>
+          {(variant) => (
+            <Card.Root w="30%" bgColor={"whiteAlpha.800"}>
+              <Card.Body gap="2">
+                <Avatar.Root size="md" shape="rounded">
+                  {/* <Avatar.Image src="https://picsum.photos/200/300" /> */}
+                  <Avatar.Fallback name={variant?.reviewerName || ""} />
+                </Avatar.Root>
+                <Card.Title mb="2">
+                  {variant?.reviewerName || "Nue Camp"}
+                </Card.Title>
+                <Card.Description>
+                  {variant?.comment || "No review available."}
+                </Card.Description>
+              </Card.Body>
+              <Card.Footer justifyContent="center">
+                <RatingGroup.Root
+                  count={5}
+                  defaultValue={product.rating}
+                  size="sm"
+                >
+                  <RatingGroup.HiddenInput />
+                  <RatingGroup.Control />
+                </RatingGroup.Root>
+              </Card.Footer>
+            </Card.Root>
+          )}
+        </For>
+      </Stack>
+    </Fragment>
   );
 }
 
