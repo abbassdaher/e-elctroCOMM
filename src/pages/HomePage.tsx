@@ -5,6 +5,8 @@ import type { IProduct } from "../interface";
 // import { useDispatch, useSelector } from "react-redux";
 // import type { AppDispatch, RootState } from "../redux/Store";
 import { useGetProductsListQuery } from "../redux/RTKQuery/ProductsList";
+import { Grid } from "@chakra-ui/react";
+import SkelatonCard from "../components/ui/card/SkelatonCard";
 
 const HomePage = () => {
   // const { data, loading } = useSelector(({ products }: RootState) => products);
@@ -14,8 +16,13 @@ const HomePage = () => {
   // useEffect(() => {
   //   dispatch(getProductsList());
   // }, [dispatch]);
+  
   if (isLoading)
-    return <div className="text-center text-light">Loading...</div>;
+    return <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap="4">
+       {Array.from({ length: 20 }).map((_, i) => (
+        <SkelatonCard key={i} />
+       ))}
+      </Grid>;
   // useQuery
   // const { isPending, error, data } = useQuery({
   //   queryKey: ["products"],
@@ -30,20 +37,13 @@ const HomePage = () => {
   return (
     <Fragment>
       {/* <NavBar /> */}
-      <div className="grid sm:grid-cols-3 md:grid-cols-3  lg:grid-cols-4 mt-10 gap-3">
-        {/*  useQuery */}
-        {/* {data &&
-          data.products &&
-          data.products.map((product: IProduct) => (
-            <Card key={product.id} product={product} />
-          ))} */}
-
-        {/* useRedux */}
+      
+      <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap="4">
         {data.products &&
           data.products.map((product: IProduct) => (
             <Card key={product.id} product={product} />
           ))}
-      </div>
+      </Grid>
     </Fragment>
   );
 };
