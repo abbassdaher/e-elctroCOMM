@@ -9,20 +9,19 @@ import { Grid } from "@chakra-ui/react";
 import SkelatonCard from "../components/ui/card/SkelatonCard";
 
 const HomePage = () => {
-  // const { data, loading } = useSelector(({ products }: RootState) => products);
   const { data, isLoading } = useGetProductsListQuery({});
-  // const dispatch = useDispatch<AppDispatch>();
-
-  // useEffect(() => {
-  //   dispatch(getProductsList());
-  // }, [dispatch]);
-  
   if (isLoading)
-    return <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap="4">
-       {Array.from({ length: 20 }).map((_, i) => (
-        <SkelatonCard key={i} />
-       ))}
-      </Grid>;
+    return (
+      <Grid
+        templateColumns="repeat(auto-fill, minmax(200px, 1fr)) "
+        gap="4"
+        // mt={10}
+      >
+        {Array.from({ length: 20 }).map((_, i) => (
+          <SkelatonCard key={i} />
+        ))}
+      </Grid>
+    );
   // useQuery
   // const { isPending, error, data } = useQuery({
   //   queryKey: ["products"],
@@ -36,9 +35,12 @@ const HomePage = () => {
 
   return (
     <Fragment>
-      {/* <NavBar /> */}
-      
-      <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap="4">
+      <Grid
+        templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+        gap="4"
+        // mt={10}
+        justifyItems="center"
+      >
         {data.products &&
           data.products.map((product: IProduct) => (
             <Card key={product.id} product={product} />

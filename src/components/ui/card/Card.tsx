@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/Redusers";
 import { Link } from "react-router-dom";
 import { clickedOnProduct } from "../../../redux/Slices/ClickedOnProductSlice";
+import { Stack } from "@chakra-ui/react";
 
 interface Iprops {
   product: {
@@ -15,7 +16,7 @@ const Card = ({ product }: Iprops) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="card ">
+    <Stack className="card flex flex-col justify-between  p-4 rounded-lg shadow-md bg-white">
       <Link to={`product/${product.id}`}>
         <div
           className="image_container"
@@ -80,7 +81,7 @@ const Card = ({ product }: Iprops) => {
           <span>Add to cart</span>
         </button>
       </div>
-    </div>
+    </Stack>
   );
 };
 export default Card;

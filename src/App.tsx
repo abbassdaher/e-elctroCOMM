@@ -11,6 +11,7 @@ import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductInfo from "./pages/ProductInfo";
 import SignInSignUp from "./pages/SignInSignUp";
+import NavBarChakra from "./components/ui/navbarChakra/NavChakra";
 
 function App() {
   const queryClient = new QueryClient();
@@ -20,8 +21,8 @@ function App() {
       <ChakraProvider value={defaultSystem}>
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
-            <NavBar />
-
+            {/* <NavBar /> */}
+            <NavBarChakra />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPages />} />
@@ -37,3 +38,4 @@ function App() {
 }
 
 export default App;
+ 

@@ -21,7 +21,9 @@ const NavBar = () => {
             <Link to="/about">About</Link>
           </li>
 
-          <li><Link to="/signIn-Up">Login</Link></li>
+          <li>
+            <Link to="/signIn-Up">Login</Link>
+          </li>
         </ul>
       </div>
     </Fragment>

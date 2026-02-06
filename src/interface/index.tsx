@@ -8,6 +8,7 @@ export interface IProduct {
   price: number;
   quantity: number;
   rating: number;
+  linkColor?: string;
   availabilityStatus: string;
   reviews?: {
     reviewerName: string;

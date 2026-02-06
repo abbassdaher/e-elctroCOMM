@@ -1,5 +1,4 @@
 import {
-  Center,
   HStack,
   Skeleton,
   SkeletonText,

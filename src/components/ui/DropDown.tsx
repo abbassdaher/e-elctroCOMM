@@ -72,7 +72,7 @@ const DropDown = () => {
                     <img
                       alt="tania andrew"
                       src={item.images[0]}
-                      className="relative inline-block h-10 w-10 rounded-full object-cover object-center"
+                      className="relati`ve inline-block h-10 w-10 rounded-full object-cover object-center"
                     />
                     <div className="flex flex-col gap-1 ml-4">
                       <p className="text-slate-800 font-medium">{item.brand}</p>
