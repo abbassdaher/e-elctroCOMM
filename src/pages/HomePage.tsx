@@ -37,7 +37,7 @@ const HomePage = () => {
     <Fragment>
       <Grid
         templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-        gap="4"
+        gap="4" 
         // mt={10}
         justifyItems="center"
       >

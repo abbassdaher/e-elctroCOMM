@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 
 import DropDownMenu from "./DropDownMenu";
 import type { ICartItem } from "@/interface";
+import { ColorModeButton } from "../color-mode";
 export default function NavBarChakra() {
   const { open, onOpen, onClose } = useDisclosure();
   const linkColor = "#6d28d9";
@@ -31,7 +32,8 @@ export default function NavBarChakra() {
       top="0"
       width="full"
       zIndex="55"
-      bg="darkgray"
+      // bg="darkgray"
+      bg={{ base: "darkgray", _dark: "black" }}
       boxShadow="md"
       px={4}
       mb={1}
@@ -79,12 +81,15 @@ export default function NavBarChakra() {
             </Box>
 
             {/* Desktop Dropdown */}
-            </HStack>
+          </HStack>
 
           {/* favorite */}
-          <Box display={{ base: "block" }}>
-            {cartSelector.length > 0 ? <DropDownMenu /> : null}
-          </Box>
+          <HStack>
+            <Box display={{ base: "block" }}>
+              {cartSelector.length > 0 ? <DropDownMenu /> : null}
+            </Box>
+            <ColorModeButton />
+          </HStack>
         </Flex>
       </Container>
 

@@ -47,12 +47,12 @@ const DropDownMenu = () => {
               <LuShoppingBasket />
             </Link>
 
-            <Float offsetX={"12"} offsetY={"4"}>
+            <Float offsetX={"24"} offsetY={"4"}>
               <Circle
                 size="4"
                 bg="white"
                 color="red"
-                opacity={0.6}
+                opacity={0.5}
                 fontSize={"sm"}
               >
                 {cartItems.length}
@@ -102,7 +102,7 @@ const DropDownMenu = () => {
                 <ScrollArea.Corner />
               </ScrollArea.Root>
             </Stack>
-          </PopoverContent>{" "}
+          </PopoverContent>
         </Popover.Positioner>
       </Popover.Root>
     </Stack>

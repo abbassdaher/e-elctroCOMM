@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/Redusers";
 import { Link } from "react-router-dom";
 import { clickedOnProduct } from "../../../redux/Slices/ClickedOnProductSlice";
-import { Stack } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 
 interface Iprops {
   product: {
@@ -16,22 +16,30 @@ const Card = ({ product }: Iprops) => {
   const dispatch = useDispatch();
 
   return (
-    <Stack className="card flex flex-col justify-between  p-4 rounded-lg shadow-md bg-white">
+    <Stack
+      className="card flex flex-col justify-between  p-4 rounded-lg shadow-md bg-white"
+      bg={{ base: "gray.100", _dark: "gray.800" }}
+    >
       <Link to={`product/${product.id}`}>
-        <div
-          className="image_container"
-          onClick={() => dispatch(clickedOnProduct(product))}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            className="image bg-light"
+        <Box>
+          <div
+            className="image_container"
+            onClick={() => dispatch(clickedOnProduct(product))}
           >
-            <image href={product.images[0]} height="100%" width="100%" />
-          </svg>
-        </div>
+            <svg
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              className="image bg-light"
+            >
+              <image href={product.images[0]} height="100%" width="100%" />
+            </svg>
+          </div>
+        </Box>
+
         <div className="title">
-          <span>{product.brand}</span>
+          <Box color={{ base: "black", _dark: "white" }}>
+            <span>{product.brand}</span>
+          </Box>
         </div>
       </Link>
       {/* size */}
@@ -58,7 +66,9 @@ const Card = ({ product }: Iprops) => {
         </div> */}
       <div className="action  ">
         <div className="price  ">
-          <span>${product.price}</span>
+          <Box color={{ base: "black", _dark: "white" }}>
+            <span>${product.price}</span>
+          </Box>
         </div>
         <button
           className="cart-button"

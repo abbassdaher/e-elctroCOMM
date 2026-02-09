@@ -5,13 +5,13 @@ import "./components/ui/card/index.css";
 import HomePage from "./pages/HomePage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { store } from "./redux/Store";
-import NavBar from "./components/ui/NavBar";
 import AboutPages from "./pages/AboutPages";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductInfo from "./pages/ProductInfo";
 import SignInSignUp from "./pages/SignInSignUp";
 import NavBarChakra from "./components/ui/navbarChakra/NavChakra";
+import {  ColorModeProvider } from "./components/ui/color-mode";
 
 function App() {
   const queryClient = new QueryClient();
@@ -19,9 +19,11 @@ function App() {
   return (
     <Router>
       <ChakraProvider value={defaultSystem}>
+        <ColorModeProvider>
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
             {/* <NavBar /> */}
+            
             <NavBarChakra />
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -32,6 +34,7 @@ function App() {
             </Routes>
           </QueryClientProvider>
         </Provider>
+        </ColorModeProvider>
       </ChakraProvider>
     </Router>
   );
