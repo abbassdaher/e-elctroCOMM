@@ -14,14 +14,14 @@ import {
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { HiMenuAlt2 } from "react-icons/hi";
-// import { useColorMode, useColorModeValue } from '@/components/ui/color-mode';
-// import { GiHamburgerMenu } from 'react-icons/gi';
-// import { AiOutlineClose } from 'react-icons/ai';
+import { useSelector } from "react-redux";
 
 import DropDownMenu from "./DropDownMenu";
+import type { ICartItem } from "@/interface";
 export default function NavBarChakra() {
   const { open, onOpen, onClose } = useDisclosure();
   const linkColor = "#6d28d9";
+  const cartSelector = useSelector((state: ICartItem) => state.cart.cartItems);
   // const mobileHoverBg = useColorModeValue('gray.100', 'gray.700');
   // {useColorMode().colorMode === 'light' ? 'white' : 'gray.800'}
   return (
@@ -31,7 +31,7 @@ export default function NavBarChakra() {
       top="0"
       width="full"
       zIndex="55"
-      bg="lightgray"
+      bg="darkgray"
       boxShadow="md"
       px={4}
       mb={1}
@@ -83,7 +83,7 @@ export default function NavBarChakra() {
 
           {/* favorite */}
           <Box display={{ base: "block" }}>
-            <DropDownMenu />
+            {cartSelector.length > 0 ? <DropDownMenu /> : null}
           </Box>
         </Flex>
       </Container>
