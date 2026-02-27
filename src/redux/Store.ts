@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  cartSlice  from "./Redusers"; // export const store = configureStore({
+import cartSlice from "./Redusers"; // export const store = configureStore({
 import { ProductsList } from "./RTKQuery/ProductsList";
 import ClickedOnProductSlice from "./Slices/ClickedOnProductSlice";
+import { signUpInSlice } from "./Slices/Auth";
 
 export const store = configureStore({
   reducer: {
@@ -9,10 +10,13 @@ export const store = configureStore({
     // products:productsSlice,
     [ProductsList.reducerPath]: ProductsList.reducer,
     clickedOnProduct: ClickedOnProductSlice,
-    
+    [signUpInSlice.reducerPath]: signUpInSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(ProductsList.middleware),
+    getDefaultMiddleware().concat(
+      ProductsList.middleware,
+      signUpInSlice.middleware,
+    ),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

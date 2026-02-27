@@ -29,3 +29,15 @@ export interface IProductsState {
   loading: boolean;
   error: string | null;
 }
+export interface Iuser{
+  username?: string;
+  email?: string;
+  identifier?: string;
+  password?: string;
+  data?:{
+    identifier?: string;
+    username: string;
+    email: string;
+    password: string;
+  }
+}

@@ -57,7 +57,7 @@
 
 // export default SignInSignUp;
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import {
   Container,
   Input,
@@ -72,24 +72,72 @@ import {
   Field,
 } from "@chakra-ui/react";
 import { useTheme } from "next-themes";
+import type { Iuser } from "@/interface";
+import { signUpInSlice } from "../redux/Slices/Auth";
+import toast, { Toaster } from "react-hot-toast";
+// import { loginSlice } from "../redux/Slices/LoginSlice";
 
 const SignInSignUp = () => {
+  const { theme } = useTheme();
   const [show, setShow] = useState(false);
+  const [signUP, setsignUP] = useState(false);
   const handleClick = () => setShow(!show);
   const {
     register,
     handleSubmit,
-    watch,
+    // watch,
     formState: { errors },
-  } = useForm();
-  const onSubmit: SubmitHandler = (data) => console.log(data);
+  } = useForm<Iuser>();
+
+  const [addUser, { isSuccess, isError, reset }] =
+    signUpInSlice.useSignUpMutation();
+  const [signIn, { isSuccess: isSignInSuccess, isError: isSignInError,status }] =
+    signUpInSlice.useLoginMutation();
+  // register submit handler
+  const onRegisterSubmit: SubmitHandler<Iuser> = async (data) => {
+    // try {
+    console.log(data);
+    const response = await addUser({
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    }).unwrap();
+    console.log(response);
+    reset();
+    if (isSuccess) {
+      toast.success("Successfully registered!");
+    }
+    if (isError) {
+      toast.error("Registration failed!");
+    }
+    console.log(data);
+  };
+  // login submit handler
+  const onLoginSubmit: SubmitHandler<Iuser> = async (data) => {
+    const response = await signIn({
+      username: data.username,
+      identifier: data.identifier,
+      password: data.password,
+    }).unwrap();
+
+    console.log(response);
+    console.log(status)
+    if (isSignInSuccess) {
+      toast.success("Successfully signed in!");
+    } else if (isSignInError) {
+      toast.error("Sign in failed!");
+    }
+  };
+  // if (isSignInSuccess) toast.success("Successfully signed in!");
+
+  // const [addUser] = signUpSlice.useSignUpMutation();
+  // If your mutation expects an object, update the API definition to accept an object.
+  // If it expects a string (like email), only pass the email.
   return (
     <Container maxW="7xl" p={{ base: 5, md: 10 }}>
+      <Toaster />
       <Center>
-        <Stack
-          gap={4}
-          color={useTheme().theme === "dark" ? "white" : "gray.800"}
-        >
+        <Stack gap={4} color={theme === "dark" ? "white" : "gray.800"}>
           <Stack align="center">
             <Heading fontSize="2xl">Sign in to your account</Heading>
           </Stack>
@@ -97,32 +145,61 @@ const SignInSignUp = () => {
             as="form"
             boxSize={{ base: "xs", sm: "sm", md: "md" }}
             h="max-content !important"
-            bg={useTheme().theme === "light" ? "white" : "gray.800"}
+            bg={theme === "light" ? "white" : "gray.800"}
             rounded="lg"
             boxShadow="lg"
             p={{ base: 5, sm: 10 }}
             gap={8}
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(signUP ? onRegisterSubmit : onLoginSubmit)}
           >
             <VStack
               gap={4}
               w="100%"
-              color={useTheme().theme === "dark" ? "white" : "gray.800"}
+              color={theme === "dark" ? "white" : "gray.800"}
             >
-              <Field.Root id="email">
-                <Field.Label>Email</Field.Label>
+              {/* username */}
+
+              <Field.Root id="username">
+                <Field.Label>Username</Field.Label>
                 <Input
                   rounded="md"
-                  type="email"
-                  borderColor={
-                    useTheme().theme === "dark" ? "gray.600" : "gray.300"
-                  }
-                  {...register("emailRequired", { required: true })}
+                  type="text"
+                  borderColor={theme === "dark" ? "gray.600" : "gray.300"}
+                  {...register("username", { required: true })}
                 />
-                {errors.emailRequired && (
-                  <span className="text-red-500">This email is required!</span>
+                {errors.username && (
+                  <span className="text-red-500">Username is required!</span>
                 )}
               </Field.Root>
+
+              {/* identifier */}
+              {signUP ? (
+                <Field.Root id="email">
+                  <Field.Label>Email</Field.Label>
+                  <Input
+                    rounded="md"
+                    type="email"
+                    borderColor={theme === "dark" ? "gray.600" : "gray.300"}
+                    {...register("email", {
+                      required: true,
+                    })}
+                  />
+                </Field.Root>
+              ) : (
+                <Field.Root id="identifier">
+                  <Field.Label>Email</Field.Label>
+                  <Input
+                    rounded="md"
+                    type="email"
+                    borderColor={theme === "dark" ? "gray.600" : "gray.300"}
+                    {...register("identifier", {
+                      required: true,
+                    })}
+                  />
+                </Field.Root>
+              )}
+
+              {/* password */}
               <Field.Root id="password">
                 <Field.Label>Password</Field.Label>
                 <InputGroup
@@ -130,62 +207,88 @@ const SignInSignUp = () => {
                   endElement={
                     <Button
                       h="1.75rem"
+                      width="4.5rem"
                       size="sm"
                       rounded="md"
-                      bg={useTheme().theme === "dark" ? "white" : "gray.800"}
+                      bg={theme === "dark" ? "white" : "gray.800"}
                       _hover={{
-                        bg:
-                          useTheme().theme === "light"
-                            ? "gray.200"
-                            : "gray.700",
+                        bg: theme === "light" ? "gray.200" : "gray.700",
                       }}
                       onClick={handleClick}
                     >
                       {show ? "Hide" : "Show"}
                     </Button>
                   }
-                  {...register("passwordRequired", { required: true })}
+                  {...register("password", { required: true })}
                 >
                   <Input
                     rounded="md"
+                    // type="text"
                     type={show ? "text" : "password"}
-                    borderColor={
-                      useTheme().theme === "dark" ? "gray.600" : "gray.300"
-                    }
+                    borderColor={theme === "dark" ? "gray.600" : "gray.300"}
+                    {...register("password", { required: true })}
                   ></Input>
                 </InputGroup>
-                {errors.passwordRequired && (
-                  <span className="text-red-500">This password is required!</span>
+                {errors.password && (
+                  <span className="text-red-500">
+                    This password is required!
+                  </span>
                 )}
-
                 {/* <InputRightElement width="4.5rem"> */}
-
                 {/* </InputRightElement> */}
               </Field.Root>
             </VStack>
             <VStack w="100%">
-              <Stack direction="row" justifyContent="space-between" w="100%">
-                <Checkbox.Root>
-                  <Checkbox.HiddenInput />
-                  <Checkbox.Control />
-                  <Checkbox.Label>Remember me</Checkbox.Label>
-                </Checkbox.Root>
-                <Link fontSize={{ base: "md", sm: "md" }}>
-                  Forgot password?
-                </Link>
-              </Stack>
-              <Button
-                bg="green.300"
-                color="white"
-                _hover={{
-                  bg: "green.500",
+              {!signUP ? (
+                <Stack direction="row" justifyContent="space-between" w="100%">
+                  <Checkbox.Root>
+                    <Checkbox.HiddenInput />
+                    <Checkbox.Control />
+                    <Checkbox.Label>Remember me</Checkbox.Label>
+                  </Checkbox.Root>
+                  <Link fontSize={{ base: "md", sm: "md" }}>
+                    Forgot password?
+                  </Link>
+                </Stack>
+              ) : null}
+
+              {signUP ? (
+                <Button
+                  bg="blue.300"
+                  color="white"
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                  rounded="md"
+                  w="100%"
+                  type="submit"
+                >
+                  Sign up
+                </Button>
+              ) : (
+                <Button
+                  bg="green.300"
+                  color="white"
+                  _hover={{
+                    bg: "green.500",
+                  }}
+                  rounded="md"
+                  w="100%"
+                  type="submit"
+                >
+                  Sign in
+                </Button>
+              )}
+              <Link
+                fontSize={{ base: "md", sm: "md" }}
+                onClick={() => {
+                  setsignUP(!signUP);
                 }}
-                rounded="md"
-                w="100%"
-                type="submit"
               >
-                Sign in
-              </Button>
+                {signUP
+                  ? "Already have an account? Sign in"
+                  : "Don't have an account? Sign up"}
+              </Link>
             </VStack>
           </VStack>
         </Stack>
