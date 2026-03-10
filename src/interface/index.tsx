@@ -41,3 +41,10 @@ export interface Iuser{
     password: string;
   }
 }
+export interface IAuthState {
+  user: Iuser | null;
+  token: string | null;
+  loading: boolean;
+  error: string | null;
+}
+

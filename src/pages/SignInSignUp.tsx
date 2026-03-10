@@ -75,6 +75,7 @@ import { useTheme } from "next-themes";
 import type { Iuser } from "@/interface";
 import { signUpInSlice } from "../redux/Slices/Auth";
 import toast, { Toaster } from "react-hot-toast";
+
 // import { loginSlice } from "../redux/Slices/LoginSlice";
 
 const SignInSignUp = () => {
@@ -89,47 +90,41 @@ const SignInSignUp = () => {
     formState: { errors },
   } = useForm<Iuser>();
 
-  const [addUser, { isSuccess, isError, reset }] =
-    signUpInSlice.useSignUpMutation();
-  const [signIn, { isSuccess: isSignInSuccess, isError: isSignInError,status }] =
-    signUpInSlice.useLoginMutation();
+  const [addUser, { reset }] = signUpInSlice.useSignUpMutation();
+  const [signIn] = signUpInSlice.useLoginMutation();
   // register submit handler
   const onRegisterSubmit: SubmitHandler<Iuser> = async (data) => {
     // try {
-    console.log(data);
-    const response = await addUser({
-      username: data.username,
-      email: data.email,
-      password: data.password,
-    }).unwrap();
-    console.log(response);
-    reset();
-    if (isSuccess) {
+    try {
+      const response = await addUser({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      }).unwrap();
+      console.log(response);
       toast.success("Successfully registered!");
+      reset();
+    } catch (error) {
+      toast.error(
+        (error as { data: { error: { message: string } } }).data.error.message,
+      );
     }
-    if (isError) {
-      toast.error("Registration failed!");
-    }
-    console.log(data);
   };
   // login submit handler
   const onLoginSubmit: SubmitHandler<Iuser> = async (data) => {
-    const response = await signIn({
-      username: data.username,
-      identifier: data.identifier,
-      password: data.password,
-    }).unwrap();
-
-    console.log(response);
-    console.log(status)
-    if (isSignInSuccess) {
+    try {
+      await signIn({
+        username: data.username,
+        identifier: data.identifier,
+        password: data.password,
+      }).unwrap();
       toast.success("Successfully signed in!");
-    } else if (isSignInError) {
-      toast.error("Sign in failed!");
+    } catch (error) {
+      toast.error(
+        (error as { data: { error: { message: string } } }).data.error.message,
+      );
     }
   };
-  // if (isSignInSuccess) toast.success("Successfully signed in!");
-
   // const [addUser] = signUpSlice.useSignUpMutation();
   // If your mutation expects an object, update the API definition to accept an object.
   // If it expects a string (like email), only pass the email.
