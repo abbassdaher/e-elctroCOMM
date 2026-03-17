@@ -34,6 +34,7 @@ export interface Iuser{
   email?: string;
   identifier?: string;
   password?: string;
+  jwt?: string;
   data?:{
     identifier?: string;
     username: string;

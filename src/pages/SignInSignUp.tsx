@@ -75,6 +75,8 @@ import { useTheme } from "next-themes";
 import type { Iuser } from "@/interface";
 import { signUpInSlice } from "../redux/Slices/Auth";
 import toast, { Toaster } from "react-hot-toast";
+import CookieServices from "../components/sevices/CookieServices";
+// import {CookieServices} from "../components/services/CookieServices";
 
 // import { loginSlice } from "../redux/Slices/LoginSlice";
 
@@ -113,11 +115,19 @@ const SignInSignUp = () => {
   // login submit handler
   const onLoginSubmit: SubmitHandler<Iuser> = async (data) => {
     try {
-      await signIn({
+      const response = await signIn({
         username: data.username,
         identifier: data.identifier,
         password: data.password,
       }).unwrap();
+      const date = new Date();
+      const IN_DAYS = 3;
+      const EXPIRES_IN_DAYS = 1000 * 60 * 60 * 24 * IN_DAYS ; // 3 days in milliseconds
+      const options = { path: "/", expires: new Date(date.getTime() + EXPIRES_IN_DAYS) };
+      if (response?.jwt) {
+        CookieServices.setCookie("jwt", response.jwt,options);
+      }
+      // console.log(CookieService.set("jwt", data.jwt));
       toast.success("Successfully signed in!");
     } catch (error) {
       toast.error(
