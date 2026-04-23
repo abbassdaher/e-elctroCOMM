@@ -10,30 +10,32 @@ import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductInfo from "./pages/ProductInfo";
 import SignInSignUp from "./pages/SignInSignUp";
-import NavBarChakra from "./components/ui/navbarChakra/NavChakra";
-import {  ColorModeProvider } from "./components/ui/color-mode";
+import AppLayout from "./components/layout/AppLayout";
+import { ColorModeProvider } from "./components/ui/color-mode";
+import CookieServices from "./components/sevices/CookieServices";
 
 function App() {
   const queryClient = new QueryClient();
+  const token = CookieServices.getCookie("jwt");
 
   return (
     <Router>
       <ChakraProvider value={defaultSystem}>
         <ColorModeProvider>
-        <Provider store={store}>
-          <QueryClientProvider client={queryClient}>
-            {/* <NavBar /> */}
-            
-            <NavBarChakra />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPages />} />
-              <Route path="product/:id" element={<ProductInfo />} />
-              <Route path="/signIn-Up" element={<SignInSignUp />} />
+          <Provider store={store}>
+            <QueryClientProvider client={queryClient}>
+              {/* <NavBar /> */}
 
-            </Routes>
-          </QueryClientProvider>
-        </Provider>
+              <Routes>
+                <Route path="/" element={<AppLayout  />}>
+                  <Route index element={<HomePage />} />
+                  <Route path="about" element={<AboutPages />} />
+                  <Route path="product/:id" element={<ProductInfo />} />
+                </Route>
+                <Route path="signIn-Up" element={<SignInSignUp isauthenticated={token}/>} />
+              </Routes>
+            </QueryClientProvider>
+          </Provider>
         </ColorModeProvider>
       </ChakraProvider>
     </Router>
@@ -41,4 +43,3 @@ function App() {
 }
 
 export default App;
- 

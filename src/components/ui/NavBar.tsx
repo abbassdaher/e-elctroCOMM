@@ -6,7 +6,7 @@ const NavBar = () => {
   // const cartItemsCount = useSelector((state: { addToCart: { value: number } }) => state.addToCart.value);
   return (
     //
-
+              // !: oldddddddddddd nav bar
     <Fragment>
       <div className="navbar flex flex-row  justify-around ">
         <h1 className="font-bold">
@@ -16,6 +16,7 @@ const NavBar = () => {
         <ul className="flex flex-row justify-content-center gap-4 cursor-pointer">
           <li>
             <DropDown />
+            
           </li>
           <li>
             <Link to="/about">About</Link>
@@ -23,6 +24,9 @@ const NavBar = () => {
 
           <li>
             <Link to="/signIn-Up">Login</Link>
+          </li>
+          <li>
+            <Link to="/logout">logout</Link>
           </li>
         </ul>
       </div>

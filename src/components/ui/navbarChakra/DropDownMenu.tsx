@@ -12,6 +12,7 @@ import {
   Circle,
   CloseButton,
   ScrollArea,
+  Box,
 } from "@chakra-ui/react";
 
 import { FaChevronDown } from "react-icons/fa";
@@ -34,38 +35,44 @@ const DropDownMenu = () => {
         onOpenChange={() => (open ? onClose() : onOpen())}
       >
         <PopoverTrigger>
-          <HStack cursor="pointer" role="group" aria-haspopup="menu">
-            <Link
-              href="#"
-              p={2}
-              fontSize={{ sm: "md", md: "lg" }}
-              fontWeight="bold"
-              color={useColorModeValue("gray.600", "gray.200")}
-              _groupHover={{ color: linkColor }}
-              _hover={{ textDecoration: "none" }}
-            >
-              <LuShoppingBasket />
-            </Link>
-
-            <Float offsetX={"24"} offsetY={"4"}>
-              <Circle
-                size="4"
-                bg="white"
-                color="red"
-                opacity={0.5}
-                fontSize={"sm"}
+          <HStack
+            cursor="pointer"
+            role="group"
+            aria-haspopup="menu"
+            // bg={"blue"}
+          >
+            <Box position="relative">
+              <Float>
+                <Circle
+                  size="5"
+                  bg="white"
+                  color="red"
+                  opacity={0.5}
+                  fontSize={"sm"}
+                >
+                  {cartItems.length}
+                </Circle>
+              </Float>
+              <Link
+                href="#"
+                p={1}
+                fontSize={{ sm: "md", md: "lg" }}
+                fontWeight="bold"
+                color={useColorModeValue("gray.600", "gray.200")}
+                _groupHover={{ color: linkColor }}
+                _hover={{ textDecoration: "none" }}
               >
-                {cartItems.length}
-              </Circle>
-            </Float>
+                <LuShoppingBasket />
+              </Link>
+            </Box>
             <Icon
               as={FaChevronDown}
-              h={4}
-              w={4}
+              h={5}
+              w={5}
               transition="transform 0.25s ease-in-out"
               transform={open ? "rotate(180deg)" : "rotate(0deg)"}
               _groupHover={{ color: linkColor }}
-              color={"black"}
+              color={linkColor}
             />
           </HStack>
         </PopoverTrigger>
@@ -84,9 +91,9 @@ const DropDownMenu = () => {
               {/* {menuData.map((item) => (
                 <DropDownItem key={item.id} {...item} linkColor={linkColor} />
               ))} */}
-              <ScrollArea.Root height="9.5rem" maxW="lg">
+              <ScrollArea.Root height="9.5rem">
                 <ScrollArea.Viewport>
-                  <ScrollArea.Content spaceY="4" textStyle="sm">
+                  <ScrollArea.Content spaceY="1" textStyle="sm" mr={3} p={2}>
                     {cartItems.map((item) => (
                       <DropDownItem
                         key={item.id}

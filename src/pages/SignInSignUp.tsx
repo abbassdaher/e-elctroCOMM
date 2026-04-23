@@ -76,11 +76,13 @@ import type { Iuser } from "@/interface";
 import { signUpInSlice } from "../redux/Slices/Auth";
 import toast, { Toaster } from "react-hot-toast";
 import CookieServices from "../components/sevices/CookieServices";
+import { Navigate } from "react-router-dom";
+
 // import {CookieServices} from "../components/services/CookieServices";
 
 // import { loginSlice } from "../redux/Slices/LoginSlice";
 
-const SignInSignUp = () => {
+const SignInSignUp = ({ isauthenticated }: { isauthenticated?: string }) => {
   const { theme } = useTheme();
   const [show, setShow] = useState(false);
   const [signUP, setsignUP] = useState(false);
@@ -88,13 +90,14 @@ const SignInSignUp = () => {
   const {
     register,
     handleSubmit,
-    // watch,
+    //! watch,
     formState: { errors },
   } = useForm<Iuser>();
 
   const [addUser, { reset }] = signUpInSlice.useSignUpMutation();
   const [signIn] = signUpInSlice.useLoginMutation();
   // register submit handler
+
   const onRegisterSubmit: SubmitHandler<Iuser> = async (data) => {
     // try {
     try {
@@ -112,32 +115,41 @@ const SignInSignUp = () => {
       );
     }
   };
-  // login submit handler
+  //! login submit handler
   const onLoginSubmit: SubmitHandler<Iuser> = async (data) => {
+    // const token = CookieServices.getCookie("jwt");
+
     try {
       const response = await signIn({
         username: data.username,
         identifier: data.identifier,
         password: data.password,
       }).unwrap();
+      // date for sesion cookie
       const date = new Date();
       const IN_DAYS = 3;
-      const EXPIRES_IN_DAYS = 1000 * 60 * 60 * 24 * IN_DAYS ; // 3 days in milliseconds
-      const options = { path: "/", expires: new Date(date.getTime() + EXPIRES_IN_DAYS) };
+      const EXPIRES_IN_DAYS = 1000 * 60 * 60 * 24 * IN_DAYS; // 3 days in milliseconds
+      const options = {
+        path: "/",
+        expires: new Date(date.getTime() + EXPIRES_IN_DAYS),
+      };
       if (response?.jwt) {
-        CookieServices.setCookie("jwt", response.jwt,options);
+        CookieServices.setCookie("jwt", response.jwt, options);
+        // navigate("/", { replace: true });
       }
       // console.log(CookieService.set("jwt", data.jwt));
-      toast.success("Successfully signed in!");
+      toast.success("Successfully logged in!");
     } catch (error) {
       toast.error(
         (error as { data: { error: { message: string } } }).data.error.message,
-      );
+    );
     }
   };
-  // const [addUser] = signUpSlice.useSignUpMutation();
   // If your mutation expects an object, update the API definition to accept an object.
   // If it expects a string (like email), only pass the email.
+  if (isauthenticated) {
+    return <Navigate to="/" replace />;
+  }
   return (
     <Container maxW="7xl" p={{ base: 5, md: 10 }}>
       <Toaster />

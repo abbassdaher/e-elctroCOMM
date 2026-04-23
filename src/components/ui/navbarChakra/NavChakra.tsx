@@ -19,12 +19,19 @@ import { useSelector } from "react-redux";
 import DropDownMenu from "./DropDownMenu";
 import type { ICartItem } from "@/interface";
 import { ColorModeButton } from "../color-mode";
+import CookieServices from "../../sevices/CookieServices";
 export default function NavBarChakra() {
   const { open, onOpen, onClose } = useDisclosure();
   const linkColor = "#6d28d9";
   const cartSelector = useSelector((state: ICartItem) => state.cart.cartItems);
-  // const mobileHoverBg = useColorModeValue('gray.100', 'gray.700');
-  // {useColorMode().colorMode === 'light' ? 'white' : 'gray.800'}
+  const token = CookieServices.getCookie("jwt");
+  console.log(token);
+
+  const logoutHandler = () => {
+    CookieServices.removeCookie("jwt");
+    window.location.reload();
+  };
+
   return (
     <Box
       as="header"
@@ -73,22 +80,26 @@ export default function NavBarChakra() {
                 <li>
                   <Link to="/about">About</Link>
                 </li>
-
-                <li>
-                  <Link to="/signIn-Up">Login</Link>
-                </li>
               </ul>
             </Box>
-
-            {/* Desktop Dropdown */}
           </HStack>
-
-          {/* favorite */}
+          {/* Desktop Dropdown */}
           <HStack>
+            {/* add to cart */}
             <Box display={{ base: "block" }}>
               {cartSelector.length > 0 ? <DropDownMenu /> : null}
             </Box>
+            {/* dark or light mode */}
             <ColorModeButton />
+
+            {/* toggle login and logout */}
+            {token ? (
+              <Text cursor="pointer" onClick={logoutHandler}>
+                Logout
+              </Text>
+            ) : (
+              <Link to="/signIn-Up">login</Link>
+            )}
           </HStack>
         </Flex>
       </Container>
@@ -99,29 +110,29 @@ export default function NavBarChakra() {
           <Stack as="nav" gap={1}>
             {/* card on mobile view */}
             {/* {cartItems.map((item) => (
-              <Stack>
-                <HStack>
-                  <img
-                    alt="tania andrew"
-                    src={item.images[0]}
-                    className="relative inline-block h-10 w-10 rounded-full object-cover object-center"
-                  />
-                  <Text fontWeight="bold">{item.brand}</Text>
-                  <Text fontSize="sm" color="gray.600">
-                    ${item.price}
-                  </Text>
-                  X: {item.quantity}
-                  <CloseButton
-                    colorPalette="red"
-                    size={"2xs"}
-                    variant="subtle"
-                    borderRadius={"lg"}
-                    onClick={() => dispatch(removeFromCart(item))}
-                  />
-                </HStack>
-              </Stack>
-              // </Link>
-            ))} */}
+                  <Stack>
+                    <HStack>
+                      <img
+                        alt="tania andrew"
+                        src={item.images[0]}
+                        className="relative inline-block h-10 w-10 rounded-full object-cover object-center"
+                      />
+                      <Text fontWeight="bold">{item.brand}</Text>
+                      <Text fontSize="sm" color="gray.600">
+                        ${item.price}
+                      </Text>
+                      X: {item.quantity}
+                      <CloseButton
+                        colorPalette="red"
+                        size={"2xs"}
+                        variant="subtle"
+                        borderRadius={"lg"}
+                        onClick={() => dispatch(removeFromCart(item))}
+                      />
+                    </HStack>
+                  </Stack>
+                  // </Link>
+              ))} */}
             <ul className="flex flex-col justify-content-center gap-4 cursor-pointer">
               <li>
                 <Link to="/about">About</Link>
