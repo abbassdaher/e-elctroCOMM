@@ -17,11 +17,12 @@ const Card = ({ product }: Iprops) => {
 
   return (
     <Stack
-      className="card flex flex-col justify-between  p-4 rounded-lg shadow-md bg-white"
+      className="card flex flex-col justify-between   rounded-lg shadow-md bg-white"
       bg={{ base: "gray.100", _dark: "gray.800" }}
+      w={"100%"}
     >
       <Link to={`product/${product.id}`}>
-        <Box>
+        <Box >
           <div
             className="image_container"
             onClick={() => dispatch(clickedOnProduct(product))}

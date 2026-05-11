@@ -14,7 +14,7 @@ const HomePage = () => {
     return (
       <Grid
         templateColumns="repeat(auto-fill, minmax(200px, 1fr)) "
-        gap="4"
+        gap=""
         // mt={10}
       >
         {Array.from({ length: 20 }).map((_, i) => (
@@ -37,9 +37,9 @@ const HomePage = () => {
     <Fragment>
       <Grid
         templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-        gap="4" 
-        // mt={10}
+        gap={4}
         justifyItems="center"
+        
       >
         {data.products &&
           data.products.map((product: IProduct) => (

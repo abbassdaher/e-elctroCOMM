@@ -51,11 +51,11 @@ export const cartSlice = createSlice({
       }
     },
     // getProductInfo: (state, action) => {
-    //   const productInfo = state.cartItems.find(
-    //     (item) => item.id === action.payload.id
-    //   );
-    //   return productInfo;
-    // }
+      //   const productInfo = state.cartItems.find(
+      //     (item) => item.id === action.payload.id
+      //   );
+      //   return productInfo;
+      // }
 
   },
 });

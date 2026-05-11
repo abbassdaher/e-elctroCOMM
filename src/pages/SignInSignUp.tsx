@@ -97,7 +97,7 @@ const SignInSignUp = ({ isauthenticated }: { isauthenticated?: string }) => {
   const [addUser, { reset }] = signUpInSlice.useSignUpMutation();
   const [signIn] = signUpInSlice.useLoginMutation();
   // register submit handler
-
+  // !signup
   const onRegisterSubmit: SubmitHandler<Iuser> = async (data) => {
     // try {
     try {
@@ -139,10 +139,13 @@ const SignInSignUp = ({ isauthenticated }: { isauthenticated?: string }) => {
       }
       // console.log(CookieService.set("jwt", data.jwt));
       toast.success("Successfully logged in!");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       toast.error(
         (error as { data: { error: { message: string } } }).data.error.message,
-    );
+      );
     }
   };
   // If your mutation expects an object, update the API definition to accept an object.
@@ -150,6 +153,7 @@ const SignInSignUp = ({ isauthenticated }: { isauthenticated?: string }) => {
   if (isauthenticated) {
     return <Navigate to="/" replace />;
   }
+  // window.location.reload()
   return (
     <Container maxW="7xl" p={{ base: 5, md: 10 }}>
       <Toaster />
