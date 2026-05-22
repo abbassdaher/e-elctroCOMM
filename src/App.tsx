@@ -16,6 +16,7 @@ import CookieServices from "./components/sevices/CookieServices";
 import { PersistGate } from "redux-persist/integration/react";
 import AdminDashboard from "./pages/dashboard";
 import DashBoardLayout from "./pages/dashboard/DashBoardLayout";
+import { ProductTable } from "./components/ui/ProductsTable";
 
 function App() {
   const queryClient = new QueryClient();
@@ -39,7 +40,20 @@ function App() {
                   {/* dashboard layout */}
                   <Route path="/dashboardLayout" element={<DashBoardLayout />}>
                     <Route index element={<AdminDashboard />} />
+                    <Route
+                      path="/dashboardLayout/products"
+                      element={<ProductTable />}
+                    />
+                    <Route
+                      path="/dashboardLayout/categories"
+                      element={<h1>Categories</h1>}
+                    />
+                    <Route
+                      path="/dashboardLayout/Calendar"
+                      element={<h1>Calendar</h1>}
+                    />
                   </Route>
+
                   {/* signin and signup */}
                   <Route
                     path="signIn-Up"

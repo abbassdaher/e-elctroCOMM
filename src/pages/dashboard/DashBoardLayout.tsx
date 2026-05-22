@@ -4,10 +4,6 @@ import {
   Flex,
   Icon,
   Text,
-  Stack,
-  Image,
-  Button,
-  Heading,
   Drawer,
   IconButton,
   useDisclosure,
@@ -20,9 +16,10 @@ import { BsFolder2, BsCalendarCheck } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { RiFlashlightFill } from "react-icons/ri";
 import { useColorMode } from "../../components/ui/color-mode";
+import { Link, Outlet } from "react-router-dom";
 
 export default function DashboardLayout() {
-  const { open, onOpen, onClose, onToggle } = useDisclosure();
+  const { open, onOpen, onClose } = useDisclosure();
   const { colorMode } = useColorMode();
   console.log(open);
   return (
@@ -30,105 +27,111 @@ export default function DashboardLayout() {
       as="section"
       bg={colorMode === "light" ? "gray.50" : "gray.700"}
       minH="100vh"
+      ml={{ base: 0,lg: 60, md: 60 }}
     >
       <SidebarContent display={{ base: "none", md: "unset" }} />
 
-      <Drawer.Root open={open} onOpenChange={onClose} placement={"left"}>
+      <Drawer.Root open={open} onOpenChange={onClose} placement={"start"}>
         <Drawer.Positioner>
           <Drawer.Body>
             <DrawerContent>
-              <SidebarContent w="40%" borderRight="none" />
+              <SidebarContent borderRight="none" />
             </DrawerContent>
           </Drawer.Body>
         </Drawer.Positioner>
       </Drawer.Root>
-      <Box ml={{ base: 0, md: 60 }} transition=".3s ease">
+      {/*  */}
+      <Box  transition=".3s ease">
+        {/* navbar */}
         <Flex
           as="header"
           align="center"
-          justifyContent={{ base: "space-between", md: "flex-end" }}
+          justifyContent={{ base: "space-between", md: "flex-end " }}
           w="full"
           px="4"
           borderBottomWidth="1px"
           borderColor={colorMode === "light" ? "inherit" : "gray.700"}
           bg={colorMode === "light" ? "white" : "gray.800"}
           boxShadow="sm"
-          h="14"
+          h="20"
         >
           <IconButton
             aria-label="Menu"
             display={{ base: "inline-flex", md: "none" }}
             onClick={() => onOpen()}
-            // icon={<FiMenu />}
             size="md"
           >
             <FiMenu />
           </IconButton>
-
+          {/* avatart */}
           <Flex align="center">
             <Icon color="gray.500" as={FaBell} cursor="pointer" />
             <Avatar.Root size="sm" key="sm" cursor={"pointer"}>
-              <Avatar.Fallback name="Ahmad" />
+              <Avatar.Fallback name="avatar" />
               <Avatar.Image src="https://avatars2.githubusercontent.com/u/37842853?v=4" />
             </Avatar.Root>
           </Flex>
         </Flex>
         {/* Layout */}
         <Box
-          as="main"
-          p={14}
+          // as="main"
+          p={0}
           minH="25rem"
+          // width={"100%"}
           bg={colorMode === "light" ? "auto" : "gray.800"}
+          
         >
-          {" "}
-          <Stack
-            direction={{ base: "column", sm: "row" }}
-            alignItems="center"
-            justifyContent="center"
-            h="100%"
-          >
-            <Stack gap={8}>
-              <Box>
-                <Heading color="blue.400" fontSize="3xl">
-                  Point of sale
-                </Heading>
-                <Text fontSize="md" color="gray.500">
-                  Manage your inventory and sale effeciently.
-                </Text>
-              </Box>
-              <Stack
-                direction={{ base: "column", md: "row" }}
-                gap={4}
-                justifyContent="center"
-              >
-                <Button
-                  rounded="full"
-                  bg="blue.400"
-                  color="white"
-                  _hover={{
-                    bg: "blue.500",
-                  }}
+          <Outlet />
+          {/* {" "}
+            <Stack
+              direction={{ base: "column", sm: "row" }}
+              alignItems="center"
+              justifyContent="center"
+              h="100%"
+            >
+              <Stack gap={8}>
+                <Box>
+                  <Heading color="blue.400" fontSize="3xl">
+                    Point of sale
+                  </Heading>
+                  <Text fontSize="md" color="gray.500">
+                    Manage your inventory and sale effeciently.
+                  </Text>
+                </Box>
+                <Stack
+                  direction={{ base: "column", md: "row" }}
+                  gap={4}
+                  justifyContent="center"
                 >
-                  Stocks
-                </Button>
-                <Button rounded="full">Vendors</Button>
+                  <Button
+                    rounded="full"
+                    bg="blue.400"
+                    color="white"
+                    _hover={{
+                      bg: "blue.500",
+                    }}
+                  >
+                    Stocks
+                  </Button>
+                  <Button rounded="full">Vendors</Button>
+                </Stack>
               </Stack>
-            </Stack>
 
-            <Image
-              alt="Homepage Image"
-              objectFit="cover"
-              width="60vh"
-              src="https://plus.unsplash.com/premium_photo-1685136482569-a59b03025108?q=80&w=2971&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            />
-          </Stack>
+              <Image
+                alt="Homepage Image"
+                objectFit="cover"
+                width="60vh"
+                src="https://plus.unsplash.com/premium_photo-1685136482569-a59b03025108?q=80&w=2971&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              />
+            </Stack> 
+          */}
         </Box>
       </Box>
     </Box>
   );
 }
 
-const SidebarContent = ({ ...props }: any) => {
+const SidebarContent = ({ ...props }) => {
   const { colorMode } = useColorMode();
 
   return (
@@ -139,7 +142,7 @@ const SidebarContent = ({ ...props }: any) => {
       left="0"
       zIndex="sticky"
       h="full"
-      pb="10"
+      // pb="10"
       overflowX="hidden"
       overflowY="auto"
       bg={colorMode === "light" ? "white" : "gray.800"}
@@ -148,6 +151,7 @@ const SidebarContent = ({ ...props }: any) => {
       w="60"
       {...props}
     >
+      {/* header */}
       <Flex px="4" py="5" align="center">
         <Icon as={RiFlashlightFill} h={8} w={8} />
         <Text
@@ -156,7 +160,7 @@ const SidebarContent = ({ ...props }: any) => {
           color={colorMode === "light" ? "brand.500" : "white"}
           fontWeight="semibold"
         >
-          POS
+          Administrator
         </Text>
       </Flex>
       <Flex
@@ -172,23 +176,23 @@ const SidebarContent = ({ ...props }: any) => {
             console.log("dashboard");
           }}
         >
-          Dashboard
+          <Link to="/dashboardLayout">Dashboard</Link>
         </NavItem>
         <NavItem
           icon={AiOutlineTeam}
           OnClickHandler={() => {
-            console.log("team");
+            console.log("products");
           }}
         >
-          Team
+          <Link to="/dashboardLayout/products">Products</Link>
         </NavItem>
         <NavItem
           icon={BsFolder2}
           OnClickHandler={() => {
-            console.log("projects");
+            console.log("categories");
           }}
         >
-          Projects
+          <Link to="/dashboardLayout/categories">Categories</Link>
         </NavItem>
         <NavItem
           icon={BsCalendarCheck}
@@ -196,18 +200,22 @@ const SidebarContent = ({ ...props }: any) => {
             console.log("calendar");
           }}
         >
-          Calendar
+          <Link to="/dashboardLayout/calendar">Calendar</Link>
         </NavItem>
       </Flex>
     </Box>
   );
 };
 
-const NavItem = (props: any) => {
+const NavItem = (props: {
+  icon: React.ElementType;
+  children: React.ReactNode;
+  OnClickHandler: () => void;
+}) => {
   const { colorMode } = useColorMode();
   const color = colorMode === "light" ? "gray.600" : "gray.300";
 
-  const { icon, children,OnClickHandler } = props;
+  const { icon, children, OnClickHandler } = props;
   return (
     <Flex
       align="center"
