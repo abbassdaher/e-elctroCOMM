@@ -1,5 +1,5 @@
 export interface IProduct {
-  id: number;
+  productID: number;
   title: string;
   description: string;
   tags?: string[];
@@ -14,8 +14,8 @@ export interface IProduct {
     reviewerName: string;
     comment: string;
     rating: number;
-    
   }[];
+  documentId?: string;
 }
 export interface ICartItem {
   cart: {
@@ -29,18 +29,18 @@ export interface IProductsState {
   loading: boolean;
   error: string | null;
 }
-export interface Iuser{
+export interface Iuser {
   username?: string;
   email?: string;
   identifier?: string;
   password?: string;
   jwt?: string;
-  data?:{
+  data?: {
     identifier?: string;
     username: string;
     email: string;
     password: string;
-  }
+  };
 }
 export interface IAuthState {
   user: Iuser | null;
@@ -48,4 +48,13 @@ export interface IAuthState {
   loading: boolean;
   error: string | null;
 }
-
+export interface ISettingsState {
+  title: string;
+  description: string;
+  cancleTXT: string;
+  okTXT: string;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+  deleteAction: () => void;
+}

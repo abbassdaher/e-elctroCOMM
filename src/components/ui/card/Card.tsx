@@ -6,10 +6,10 @@ import { Box, Stack } from "@chakra-ui/react";
 
 interface Iprops {
   product: {
-    brand: string;
+    title: string;
     images: string[];
     price: number;
-    id: number;
+    productID: number;
   };
 }
 const Card = ({ product }: Iprops) => {
@@ -21,8 +21,8 @@ const Card = ({ product }: Iprops) => {
       bg={{ base: "gray.100", _dark: "gray.800" }}
       w={"100%"}
     >
-      <Link to={`product/${product.id}`}>
-        <Box >
+      <Link to={`product/${product.productID}`}>
+        <Box>
           <div
             className="image_container"
             onClick={() => dispatch(clickedOnProduct(product))}
@@ -39,7 +39,7 @@ const Card = ({ product }: Iprops) => {
 
         <div className="title">
           <Box color={{ base: "black", _dark: "white" }}>
-            <span>{product.brand}</span>
+            <span>{product.title}</span>
           </Box>
         </div>
       </Link>

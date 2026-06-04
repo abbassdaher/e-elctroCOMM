@@ -10,6 +10,7 @@ import SkelatonCard from "../components/ui/card/SkelatonCard";
 
 const HomePage = () => {
   const { data, isLoading } = useGetProductsListQuery({});
+  console.log(data)
   if (isLoading)
     return (
       <Grid
@@ -39,11 +40,11 @@ const HomePage = () => {
         templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
         gap={4}
         justifyItems="center"
-        
       >
-        {data.products &&
-          data.products.map((product: IProduct) => (
-            <Card key={product.id} product={product} />
+        {data.data &&
+          data.data.map((product: IProduct) => (
+            <Card key={product.productID} product={product} />
+            
           ))}
       </Grid>
     </Fragment>

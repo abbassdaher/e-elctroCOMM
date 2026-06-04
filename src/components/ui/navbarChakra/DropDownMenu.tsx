@@ -96,7 +96,7 @@ const DropDownMenu = () => {
                   <ScrollArea.Content spaceY="1" textStyle="sm" mr={3} p={2}>
                     {cartItems.map((item) => (
                       <DropDownItem
-                        key={item.id}
+                        key={item.productID}
                         {...item}
                         linkColor={linkColor}
                       />
@@ -123,7 +123,7 @@ const DropDownItem = ({
   images,
   price,
   quantity,
-  id,
+  productID,
 }: IProduct) => {
   const dispatch = useDispatch();
   return (
@@ -178,7 +178,7 @@ const DropDownItem = ({
             position={"absolute"}
             top="-4"
             right="-3"
-            onClick={() => dispatch(removeFromCart({ id }))}
+            onClick={() => dispatch(removeFromCart({ productID }))}
           />
         </HStack>
       </Stack>

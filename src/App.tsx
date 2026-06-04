@@ -41,6 +41,10 @@ function App() {
                   <Route path="/dashboardLayout" element={<DashBoardLayout />}>
                     <Route index element={<AdminDashboard />} />
                     <Route
+                      path="/dashboardLayout/product/:id"
+                      element={<ProductInfo />}
+                    />
+                    <Route
                       path="/dashboardLayout/products"
                       element={<ProductTable />}
                     />

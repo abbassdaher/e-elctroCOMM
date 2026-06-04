@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer  from "./Redusers"; // export const store = configureStore({
+import cartReducer from "./Redusers"; // export const store = configureStore({
 import { ProductsList } from "./RTKQuery/ProductsList";
 import ClickedOnProductSlice from "./Slices/ClickedOnProductSlice";
 import { signUpInSlice } from "./Slices/Auth";
+
+// Import SettingsSlice if it exists
+import { SettingsSlice } from "./Slices/SettingsSlice";
 
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/es/storage";
@@ -11,7 +14,7 @@ const persistCartConfig = {
   key: "cart",
   storage,
 };
-const persistedCard = persistReducer(persistCartConfig, cartReducer );
+const persistedCard = persistReducer(persistCartConfig, cartReducer);
 export const store = configureStore({
   reducer: {
     cart: persistedCard,
@@ -19,11 +22,13 @@ export const store = configureStore({
     [ProductsList.reducerPath]: ProductsList.reducer,
     clickedOnProduct: ClickedOnProductSlice,
     [signUpInSlice.reducerPath]: signUpInSlice.reducer,
+    [SettingsSlice.reducerPath]: SettingsSlice.reducer, // Disabled: SettingsSlice not found
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       ProductsList.middleware,
       signUpInSlice.middleware,
+      
     ),
 });
 
