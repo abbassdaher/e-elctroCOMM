@@ -16,6 +16,14 @@ export interface IProduct {
     rating: number;
   }[];
   documentId?: string;
+  name: string;
+  titleInput?: string;
+  descriptionInput?: string;
+  priceInput?: number;
+  handleSubmit?: () => void;
+  brandInput?: string;
+  SKUInput?: string;
+  stockInput?: number;
 }
 export interface ICartItem {
   cart: {

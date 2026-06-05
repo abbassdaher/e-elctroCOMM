@@ -9,6 +9,10 @@ import {
   HStack,
   IconButton,
   useDisclosure,
+  Field,
+  Input,
+  FileUpload,
+  Button,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,6 +26,9 @@ import { Link } from "react-router-dom";
 import type { IProduct } from "@/interface";
 import { Fragment } from "react";
 import { CustomAlertDialog } from "./CustomAlertDialog";
+import { CustomModal } from "./CustomModal";
+import { HiUpload } from "react-icons/hi";
+import { useForm } from "react-hook-form";
 // import { ImInsertTemplate } from "react-icons/im";
 type Product = {
   productID: number;
@@ -57,6 +64,12 @@ export const ProductTable = () => {
       console.log(err);
     }
   };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IProduct>();
+
   return (
     <Fragment>
       <Table.ScrollArea borderWidth="1px" rounded="md" height="md" width="full">
@@ -184,6 +197,110 @@ export const ProductTable = () => {
           }
         }}
       />
+      <CustomModal
+        title="Custom Modal"
+        description="Modal content goes here."
+        okTXT="Update"
+        action={handleSubmit(() => console.log("Form submitted"))}
+      >
+        <Field.Root>
+          {/* <Field.Label>title</Field.Label> */}
+          <Input
+            // name="titleInput"
+            placeholder="title"
+            css={{ "--focus-color": "lineHeights.moderate " }}
+            {...register("titleInput", { required: true })}
+          />
+          {errors.titleInput && (
+            <span className="text-red-500">Title is required!</span>
+          )}
+          <Input
+            // name="descriptionInput"
+            placeholder="description"
+            css={{ "--focus-color": "lineHeights.moderate " }}
+            {...register("descriptionInput", { required: true })}
+          />
+          {errors.descriptionInput && (
+            <span className="text-red-500">Description is required!</span>
+          )}
+          <HStack>
+            <Input
+              //   name="priceInput"
+              placeholder="price"
+              css={{ "--focus-color": "lineHeights.moderate " }}
+              {...register("priceInput", { required: true })}
+            />{" "}
+            {errors.priceInput && (
+              <span className="text-red-500">Price is required!</span>
+            )}
+            <Input
+              name="discountPercentageInput"
+              placeholder="discountPercentage"
+              css={{ "--focus-color": "lineHeights.moderate " }}
+            />
+            <Input
+              placeholder="Brand"
+              css={{ "--focus-color": "lineHeights.moderate " }}
+              {...register("brandInput", { required: true })}
+            />
+            {errors.brandInput && (
+              <span className="text-red-500">Brand is required!</span>
+            )}
+          </HStack>
+          <HStack>
+            <Input
+              placeholder="SKU"
+              css={{ "--focus-color": "lineHeights.moderate " }}
+              {...register("SKUInput", { required: true })}
+            />
+            {errors.SKUInput && (
+              <span className="text-red-500">SKU is required!</span>
+            )}
+            <Input
+              name="weightInput"
+              placeholder="Weight"
+              css={{ "--focus-color": "lineHeights.moderate " }}
+            />
+            <Input
+              name="warrantyInput"
+              placeholder="Warranty"
+              css={{ "--focus-color": "lineHeights.moderate " }}
+            />
+            <Input
+              placeholder="Stock"
+              css={{ "--focus-color": "lineHeights.moderate " }}
+              {...register("stockInput", { required: true })}
+            />
+            {errors.stockInput && (
+              <span className="text-red-500">Stock is required!</span>
+            )}
+          </HStack>
+          <HStack>
+            <Input
+              name="minimumOrderQuantityInput"
+              placeholder="Minimum Order Quantity"
+              css={{ "--focus-color": "lineHeights.moderate " }}
+            />
+            <Input
+              name="shippingInformationInput"
+              placeholder="shipping information"
+              css={{ "--focus-color": "lineHeights.moderate " }}
+            />{" "}
+          </HStack>
+          <Field.Root required>
+            <Field.Label>Images:</Field.Label>
+            <FileUpload.Root maxFiles={5}>
+              <FileUpload.HiddenInput />
+              <FileUpload.Trigger asChild>
+                <Button variant="outline" size="sm">
+                  <HiUpload /> Upload file
+                </Button>
+              </FileUpload.Trigger>
+              <FileUpload.List showSize clearable />
+            </FileUpload.Root>
+          </Field.Root>
+        </Field.Root>
+      </CustomModal>
     </Fragment>
   );
 };
