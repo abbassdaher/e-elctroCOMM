@@ -1,3 +1,4 @@
+import { data } from "react-router-dom";
 import CookieServices from "../../components/sevices/CookieServices";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -39,12 +40,32 @@ export const ProductsList = createApi({
           },
         };
       },
+      // Auto-Refetching when deleting a product
       invalidatesTags: [{ type: "Products", id: "LIST" }],
+    }),
+    editProductbyDocumentID: build.mutation({
+      query({ documentID, ...updatedFields }) {
+        return {
+          url: `/products/${documentID}`,
+          method: "PUT",
+          body: {
+            data: updatedFields,
+          },
+          headers: {
+            Authorization: `Bearer ${CookieServices.getCookie("jwt")}`,
+          },
+        };
+      },
+      // Auto-Refetching when editing a product
+      invalidatesTags: ["Products"],
     }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetProductsListQuery, useDeleteProductMutation } =
-  ProductsList;
+export const {
+  useGetProductsListQuery,
+  useDeleteProductMutation,
+  useEditProductbyDocumentIDMutation,
+} = ProductsList;

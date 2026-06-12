@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
-import { useState } from "react";
+// import { useState } from "react";
 
 interface ICustomModal {
   title: string;
@@ -13,6 +13,8 @@ interface ICustomModal {
   okTXT?: string;
   action?: () => void;
   children?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (e: { open: boolean }) => void;
 }
 export const CustomModal = ({
   title,
@@ -20,10 +22,11 @@ export const CustomModal = ({
   okTXT,
   action,
   children,
+  open,
+  onOpenChange,
 }: ICustomModal) => {
-  const [open, setOpen] = useState(true);
   return (
-    <Dialog.Root lazyMount open={open} onOpenChange={(e) => setOpen(e.open)}>
+    <Dialog.Root lazyMount open={open} onOpenChange={onOpenChange}>
       <Dialog.Trigger asChild>
         <Button variant="outline">Open</Button>
       </Dialog.Trigger>

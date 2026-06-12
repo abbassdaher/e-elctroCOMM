@@ -1,6 +1,7 @@
 import { LuTrash, LuFilePen, LuEye } from "react-icons/lu";
 import {
   useDeleteProductMutation,
+  useEditProductbyDocumentIDMutation,
   useGetProductsListQuery,
 } from "../../redux/RTKQuery/ProductsList";
 import {
@@ -24,7 +25,7 @@ import {
 import { clickedOnProduct } from "../../redux/Slices/ClickedOnProductSlice";
 import { Link } from "react-router-dom";
 import type { IProduct } from "@/interface";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { CustomAlertDialog } from "./CustomAlertDialog";
 import { CustomModal } from "./CustomModal";
 import { HiUpload } from "react-icons/hi";
@@ -43,6 +44,7 @@ type Product = {
 export const ProductTable = () => {
   const { data, isLoading } = useGetProductsListQuery({});
   const [deleteProduct] = useDeleteProductMutation();
+  const [EditProductbyDocumentID] = useEditProductbyDocumentIDMutation();
   const dispatch = useDispatch();
   const product = useSelector(
     (state: {
@@ -52,6 +54,9 @@ export const ProductTable = () => {
         seeProduct: IProduct;
       };
     }) => state.settings,
+  );
+  const settings = useSelector(
+    (state: { settings: IProduct }) => state.settings,
   );
   const { open, onOpen, onClose } = useDisclosure();
   console.log(data);
@@ -69,7 +74,7 @@ export const ProductTable = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IProduct>();
-
+  const [onOpenCustomModal, setOnOpenCustomModal] = useState(false);
   return (
     <Fragment>
       <Table.ScrollArea borderWidth="1px" rounded="md" height="md" width="full">
@@ -152,7 +157,10 @@ export const ProductTable = () => {
                           aria-label="Search database"
                           bg={{ base: "blue.300", _hover: "blue.500" }}
                           color={{ base: "blackAlpha.600", _hover: "white" }}
-                          onClick={() => dispatch(editProduct(item))}
+                          onClick={() => {
+                            setOnOpenCustomModal(true);
+                            dispatch(editProduct(item));
+                          }}
                         >
                           <LuFilePen />
                         </IconButton>
@@ -198,10 +206,31 @@ export const ProductTable = () => {
         }}
       />
       <CustomModal
-        title="Custom Modal"
-        description="Modal content goes here."
+        title="product update"
         okTXT="Update"
-        action={handleSubmit(() => console.log("Form submitted"))}
+        //         validation
+        action={handleSubmit((i) => {
+          dispatch(
+            editProduct({
+              ...settings.editProduct,
+              title: i.titleInput,
+              description: i.descriptionInput,
+              price: i.priceInput,
+              brand: i.brandInput,
+              
+            }),
+          );
+          EditProductbyDocumentID({
+            documentID: settings.editProduct.documentId,
+
+            title: i.titleInput,
+            description: i.descriptionInput,
+            price: i.priceInput,
+          });
+          setOnOpenCustomModal(false);
+        })}
+        open={onOpenCustomModal}
+        onOpenChange={(e) => setOnOpenCustomModal(e)}
       >
         <Field.Root>
           {/* <Field.Label>title</Field.Label> */}
@@ -209,6 +238,7 @@ export const ProductTable = () => {
             // name="titleInput"
             placeholder="title"
             css={{ "--focus-color": "lineHeights.moderate " }}
+            defaultValue={settings.editProduct?.title}
             {...register("titleInput", { required: true })}
           />
           {errors.titleInput && (
@@ -218,6 +248,7 @@ export const ProductTable = () => {
             // name="descriptionInput"
             placeholder="description"
             css={{ "--focus-color": "lineHeights.moderate " }}
+            defaultValue={settings.editProduct?.description}
             {...register("descriptionInput", { required: true })}
           />
           {errors.descriptionInput && (
@@ -228,6 +259,7 @@ export const ProductTable = () => {
               //   name="priceInput"
               placeholder="price"
               css={{ "--focus-color": "lineHeights.moderate " }}
+              defaultValue={settings.editProduct?.price}
               {...register("priceInput", { required: true })}
             />{" "}
             {errors.priceInput && (
@@ -237,10 +269,12 @@ export const ProductTable = () => {
               name="discountPercentageInput"
               placeholder="discountPercentage"
               css={{ "--focus-color": "lineHeights.moderate " }}
+              defaultValue={settings.editProduct?.discountPercentage}
             />
             <Input
               placeholder="Brand"
               css={{ "--focus-color": "lineHeights.moderate " }}
+              defaultValue={settings.editProduct?.brand}
               {...register("brandInput", { required: true })}
             />
             {errors.brandInput && (
@@ -249,8 +283,9 @@ export const ProductTable = () => {
           </HStack>
           <HStack>
             <Input
-              placeholder="SKU"
+              placeholder="sku"
               css={{ "--focus-color": "lineHeights.moderate " }}
+              defaultValue={settings.editProduct?.sku}
               {...register("SKUInput", { required: true })}
             />
             {errors.SKUInput && (
@@ -259,16 +294,19 @@ export const ProductTable = () => {
             <Input
               name="weightInput"
               placeholder="Weight"
+              defaultValue={settings.editProduct?.weight}
               css={{ "--focus-color": "lineHeights.moderate " }}
             />
             <Input
-              name="warrantyInput"
-              placeholder="Warranty"
+              name="returnPolicyInput"
+              placeholder="Return Policy"
+              defaultValue={settings.editProduct?.returnPolicy}
               css={{ "--focus-color": "lineHeights.moderate " }}
             />
             <Input
               placeholder="Stock"
               css={{ "--focus-color": "lineHeights.moderate " }}
+              defaultValue={settings.editProduct?.stock}
               {...register("stockInput", { required: true })}
             />
             {errors.stockInput && (
@@ -279,11 +317,13 @@ export const ProductTable = () => {
             <Input
               name="minimumOrderQuantityInput"
               placeholder="Minimum Order Quantity"
+              defaultValue={settings.editProduct?.minimumOrderQuantity}
               css={{ "--focus-color": "lineHeights.moderate " }}
             />
             <Input
               name="shippingInformationInput"
               placeholder="shipping information"
+              defaultValue={settings.editProduct?.shippingInformation}
               css={{ "--focus-color": "lineHeights.moderate " }}
             />{" "}
           </HStack>
