@@ -25,7 +25,7 @@ import {
 import { clickedOnProduct } from "../../redux/Slices/ClickedOnProductSlice";
 import { Link } from "react-router-dom";
 import type { IProduct } from "@/interface";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { CustomAlertDialog } from "./CustomAlertDialog";
 import { CustomModal } from "./CustomModal";
 import { HiUpload } from "react-icons/hi";
@@ -73,8 +73,27 @@ export const ProductTable = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IProduct>();
   const [onOpenCustomModal, setOnOpenCustomModal] = useState(false);
+
+  useEffect(() => {
+    if (settings.editProduct) {
+      reset({
+        title: settings.editProduct?.title,
+        description: settings.editProduct?.description,
+        price: settings.editProduct?.price,
+        discountPercentage: settings.editProduct?.discountPercentage,
+        brand: settings.editProduct?.brand,
+        SKUInput: settings.editProduct?.sku,
+        weightInput: settings.editProduct?.weight,
+        returnPolicyInput: settings.editProduct?.returnPolicy,
+        stockInput: settings.editProduct?.stock,
+        minimumOrderQuantityInput: settings.editProduct?.minimumOrderQuantity,
+        shippingInformationInput: settings.editProduct?.shippingInformation,
+      });
+    }
+  }, [settings.editProduct]);
   return (
     <Fragment>
       <Table.ScrollArea borderWidth="1px" rounded="md" height="md" width="full">
@@ -208,16 +227,16 @@ export const ProductTable = () => {
       <CustomModal
         title="product update"
         okTXT="Update"
+        setOnOpenCustomModal={setOnOpenCustomModal}
         //         validation
         action={handleSubmit((i) => {
           dispatch(
             editProduct({
-              ...settings.editProduct,
+              //   ...settings.editProduct,
               title: i.titleInput,
               description: i.descriptionInput,
               price: i.priceInput,
               brand: i.brandInput,
-              
             }),
           );
           EditProductbyDocumentID({

@@ -1,4 +1,3 @@
-import { data } from "react-router-dom";
 import CookieServices from "../../components/sevices/CookieServices";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
