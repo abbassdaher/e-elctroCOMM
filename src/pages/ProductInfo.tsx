@@ -18,7 +18,7 @@ import { Fragment } from "react/jsx-runtime";
 function ProductInfo() {
   const product = useSelector(
     (state: { clickedOnProduct: { product: IProduct } }) =>
-      state.clickedOnProduct.product
+      state.clickedOnProduct.product,
   );
   const dispatch = useDispatch();
 
@@ -34,8 +34,8 @@ function ProductInfo() {
         <Image
           objectFit="contain"
           maxW="200px"
-          src={product.images && product.images[0]}
-          alt="Caffe Latte"
+          src={product.images ? product.images[0]:product.tumbnaill?.[0]?.url}
+          alt={product.title}
         />
         <Box>
           <Card.Body>

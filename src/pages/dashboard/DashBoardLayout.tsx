@@ -8,6 +8,7 @@ import {
   IconButton,
   useDisclosure,
   DrawerContent,
+  Button,
 } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
 import { FaBell } from "react-icons/fa";
@@ -17,17 +18,22 @@ import { FiMenu } from "react-icons/fi";
 import { RiFlashlightFill } from "react-icons/ri";
 import { useColorMode } from "../../components/ui/color-mode";
 import { Link, Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { isCreateProduct } from "../../redux/Slices/createProductSlice";
+// import { useCreateProductMutation } from "../../redux/RTKQuery/ProductsList";
 
 export default function DashboardLayout() {
   const { open, onOpen, onClose } = useDisclosure();
   const { colorMode } = useColorMode();
-  console.log(open);
+  const dispatch = useDispatch();
+  // const handleCreateProduct = (state) => {state.createProduct = true;};
+
   return (
     <Box
       as="section"
       bg={colorMode === "light" ? "gray.50" : "gray.700"}
       minH="100vh"
-      ml={{ base: 0,lg: 60, md: 60 }}
+      ml={{ base: 0, lg: 60, md: 60 }}
     >
       <SidebarContent display={{ base: "none", md: "unset" }} />
 
@@ -41,7 +47,7 @@ export default function DashboardLayout() {
         </Drawer.Positioner>
       </Drawer.Root>
       {/*  */}
-      <Box  transition=".3s ease">
+      <Box transition=".3s ease">
         {/* navbar */}
         <Flex
           as="header"
@@ -54,6 +60,7 @@ export default function DashboardLayout() {
           bg={colorMode === "light" ? "white" : "gray.800"}
           boxShadow="sm"
           h="20"
+          gap={2}
         >
           <IconButton
             aria-label="Menu"
@@ -63,6 +70,18 @@ export default function DashboardLayout() {
           >
             <FiMenu />
           </IconButton>
+          {/* create post button */}
+          <Button
+            color="#fff"
+            rounded="md"
+            bg="#3b49df"
+            _hover={{ bg: "#323ebe" }}
+            onClick={() => {
+              dispatch(isCreateProduct(true));
+            }}
+          >
+            Create a product
+          </Button>
           {/* avatart */}
           <Flex align="center">
             <Icon color="gray.500" as={FaBell} cursor="pointer" />
@@ -79,52 +98,8 @@ export default function DashboardLayout() {
           minH="25rem"
           // width={"100%"}
           bg={colorMode === "light" ? "auto" : "gray.800"}
-          
         >
           <Outlet />
-          {/* {" "}
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              alignItems="center"
-              justifyContent="center"
-              h="100%"
-            >
-              <Stack gap={8}>
-                <Box>
-                  <Heading color="blue.400" fontSize="3xl">
-                    Point of sale
-                  </Heading>
-                  <Text fontSize="md" color="gray.500">
-                    Manage your inventory and sale effeciently.
-                  </Text>
-                </Box>
-                <Stack
-                  direction={{ base: "column", md: "row" }}
-                  gap={4}
-                  justifyContent="center"
-                >
-                  <Button
-                    rounded="full"
-                    bg="blue.400"
-                    color="white"
-                    _hover={{
-                      bg: "blue.500",
-                    }}
-                  >
-                    Stocks
-                  </Button>
-                  <Button rounded="full">Vendors</Button>
-                </Stack>
-              </Stack>
-
-              <Image
-                alt="Homepage Image"
-                objectFit="cover"
-                width="60vh"
-                src="https://plus.unsplash.com/premium_photo-1685136482569-a59b03025108?q=80&w=2971&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              />
-            </Stack> 
-          */}
         </Box>
       </Box>
     </Box>

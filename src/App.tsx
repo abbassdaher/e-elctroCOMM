@@ -17,6 +17,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import AdminDashboard from "./pages/dashboard";
 import DashBoardLayout from "./pages/dashboard/DashBoardLayout";
 import { ProductTable } from "./components/ui/ProductsTable";
+import InternetConnections from "./components/sevices/internetConnections";
 
 function App() {
   const queryClient = new QueryClient();
@@ -27,45 +28,51 @@ function App() {
       <ChakraProvider value={defaultSystem}>
         <ColorModeProvider>
           <Provider store={store}>
-            <QueryClientProvider client={queryClient}>
-              {/* <NavBar /> */}
-              <PersistGate loading={<p>Loading...</p>} persistor={persister}>
-                <Routes>
-                  {/* app layout */}
-                  <Route path="/" element={<AppLayout />}>
-                    <Route index element={<HomePage />} />
-                    <Route path="about" element={<AboutPages />} />
-                    <Route path="product/:id" element={<ProductInfo />} />
-                  </Route>
-                  {/* dashboard layout */}
-                  <Route path="/dashboardLayout" element={<DashBoardLayout />}>
-                    <Route index element={<AdminDashboard />} />
+            {" "}
+            <InternetConnections>
+              <QueryClientProvider client={queryClient}>
+                {/* <NavBar /> */}
+                <PersistGate loading={<p>Loading...</p>} persistor={persister}>
+                  <Routes>
+                    {/* app layout */}
+                    <Route path="/" element={<AppLayout />}>
+                      <Route index element={<HomePage />} />
+                      <Route path="about" element={<AboutPages />} />
+                      <Route path="product/:id" element={<ProductInfo />} />
+                    </Route>
+                    {/* dashboard layout */}
                     <Route
-                      path="/dashboardLayout/product/:id"
-                      element={<ProductInfo />}
-                    />
-                    <Route
-                      path="/dashboardLayout/products"
-                      element={<ProductTable />}
-                    />
-                    <Route
-                      path="/dashboardLayout/categories"
-                      element={<h1>Categories</h1>}
-                    />
-                    <Route
-                      path="/dashboardLayout/Calendar"
-                      element={<h1>Calendar</h1>}
-                    />
-                  </Route>
+                      path="/dashboardLayout"
+                      element={<DashBoardLayout />}
+                    >
+                      <Route index element={<AdminDashboard />} />
+                      <Route
+                        path="/dashboardLayout/product/:id"
+                        element={<ProductInfo />}
+                      />
+                      <Route
+                        path="/dashboardLayout/products"
+                        element={<ProductTable />}
+                      />
+                      <Route
+                        path="/dashboardLayout/categories"
+                        element={<h1>Categories</h1>}
+                      />
+                      <Route
+                        path="/dashboardLayout/Calendar"
+                        element={<h1>Calendar</h1>}
+                      />
+                    </Route>
 
-                  {/* signin and signup */}
-                  <Route
-                    path="signIn-Up"
-                    element={<SignInSignUp isauthenticated={token} />}
-                  />
-                </Routes>
-              </PersistGate>
-            </QueryClientProvider>
+                    {/* signin and signup */}
+                    <Route
+                      path="signIn-Up"
+                      element={<SignInSignUp isauthenticated={token} />}
+                    />
+                  </Routes>
+                </PersistGate>
+              </QueryClientProvider>
+            </InternetConnections>
           </Provider>
         </ColorModeProvider>
       </ChakraProvider>

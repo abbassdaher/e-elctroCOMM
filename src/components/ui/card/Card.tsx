@@ -3,16 +3,13 @@ import { addToCart } from "../../../redux/Redusers";
 import { Link } from "react-router-dom";
 import { clickedOnProduct } from "../../../redux/Slices/ClickedOnProductSlice";
 import { Box, Stack } from "@chakra-ui/react";
+import type { IProduct } from "@/interface";
 
-interface Iprops {
-  product: {
-    title: string;
-    images: string[];
-    price: number;
-    productID: number;
-  };
+interface CardProps {
+  product: IProduct;
 }
-const Card = ({ product }: Iprops) => {
+
+const Card = ({ product }: CardProps) => {
   const dispatch = useDispatch();
 
   return (
@@ -32,7 +29,7 @@ const Card = ({ product }: Iprops) => {
               xmlns="http://www.w3.org/2000/svg"
               className="image bg-light"
             >
-              <image href={product.images[0]} height="100%" width="100%" />
+              <image href={product.thumbnail || product.tumbnaill?.[0]?.url} height="100%" width="100%" />
             </svg>
           </div>
         </Box>

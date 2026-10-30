@@ -7,8 +7,9 @@ import { signUpInSlice } from "./Slices/Auth";
 // Import SettingsSlice if it exists
 import { SettingsSlice } from "./Slices/SettingsSlice";
 
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import storage from "redux-persist/es/storage";
+import { CreateProductSlice } from "./Slices/createProductSlice";
 
 const persistCartConfig = {
   key: "cart",
@@ -22,10 +23,18 @@ export const store = configureStore({
     [ProductsList.reducerPath]: ProductsList.reducer,
     clickedOnProduct: ClickedOnProductSlice,
     [signUpInSlice.reducerPath]: signUpInSlice.reducer,
-    [SettingsSlice.reducerPath]: SettingsSlice.reducer, // Disabled: SettingsSlice not found
+    [SettingsSlice.reducerPath]: SettingsSlice.reducer,
+    [CreateProductSlice.reducerPath]: CreateProductSlice.reducer, // Add this line to include the CreateProductSlice reducer
+     // Disabled: SettingsSlice not found
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
+    
+    getDefaultMiddleware({
+      serializableCheck: {
+        // 👈 تجاهل أكشنات الـ persist لمنع ظهور التحذير في الـ Console
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(
       ProductsList.middleware,
       signUpInSlice.middleware,
       

@@ -4,12 +4,16 @@ interface SettingsState {
   removeProduct: null;
   editProduct: null;
   seeProduct: null;
+  lastProductID?: number;
+  isOffline?: boolean;
 }
 
 const initialState: SettingsState = {
   removeProduct: null,
   editProduct: null,
   seeProduct: null,
+  lastProductID: undefined,
+  isOffline: undefined,
 };
 
 export const SettingsSlice = createSlice({
@@ -28,7 +32,15 @@ export const SettingsSlice = createSlice({
       state.seeProduct = action.payload;
       console.log(state);
     },
+    lastProductID(state, action) {
+      state.lastProductID = action.payload;
+      // console.log(state);
+    },
+    isOffline(state, action) {
+      state.isOffline = action.payload;
+      console.log(state.isOffline);
+    }
   },
 });
 
-export const { removeProduct, editProduct, seeProduct } = SettingsSlice.actions;
+export const { removeProduct, editProduct, seeProduct, lastProductID, isOffline } = SettingsSlice.actions;

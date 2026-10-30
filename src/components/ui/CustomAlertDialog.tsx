@@ -1,6 +1,7 @@
 "use client";
 
 import type { ISettingsState } from "@/interface";
+// import ProductInfo from "@/pages/ProductInfo";
 import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
 
 export const CustomAlertDialog = ({
@@ -40,7 +41,6 @@ export const CustomAlertDialog = ({
                 bg={"red.300"}
                 _hover={{ bg: "red.400" }}
                 onClick={() => deleteAction()}
-                
               >
                 {okTXT}
               </Button>

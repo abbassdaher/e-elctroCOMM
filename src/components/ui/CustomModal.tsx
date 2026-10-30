@@ -14,7 +14,7 @@ interface ICustomModal {
   action?: () => void;
   children?: React.ReactNode;
   open?: boolean;
-//   onOpenChange?: (e: { open: boolean }) => void;
+  //   onOpenChange?: (e: { open: boolean }) => void;
   setOnOpenCustomModal: (open: boolean) => void;
 }
 export const CustomModal = ({
@@ -24,13 +24,18 @@ export const CustomModal = ({
   action,
   children,
   open,
-//   onOpenChange,
+  onClose,
+  //   onOpenChange,
   setOnOpenCustomModal,
 }: ICustomModal) => {
   return (
-    <Dialog.Root lazyMount open={open} onOpenChange={(e)=>setOnOpenCustomModal(e.open)}>
+    <Dialog.Root
+      lazyMount
+      open={open}
+      onOpenChange={(e) => setOnOpenCustomModal(e.open)}
+    >
       <Dialog.Trigger asChild>
-        <Button variant="outline">Open</Button>
+        {/* <Button variant="outline">Open</Button> */}
       </Dialog.Trigger>
       <Portal>
         <Dialog.Backdrop />
@@ -45,14 +50,14 @@ export const CustomModal = ({
             </Dialog.Body>
             <Dialog.Footer>
               <Dialog.ActionTrigger asChild>
-                <Button type="button" variant="outline" onClick={()=>open=false}>
+                <Button type="button" variant="outline" onClick={onClose}>
                   Cancel
                 </Button>
               </Dialog.ActionTrigger>
               <Button onClick={action}>{okTXT}</Button>
             </Dialog.Footer>
             <Dialog.CloseTrigger asChild>
-              <CloseButton size="sm" />
+              <CloseButton size="sm" onClick={onClose} />
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>

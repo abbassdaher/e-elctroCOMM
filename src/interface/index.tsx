@@ -1,5 +1,8 @@
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
+
 export interface IProduct {
   productID: number;
+  ID: number;
   title: string;
   description: string;
   tags?: string[];
@@ -7,9 +10,21 @@ export interface IProduct {
   images: string[];
   price: number;
   quantity: number;
-  rating: number;
+  weight?: number;
+  stock?: number;
+  discountPercentage?: number;
+  rating?: number;
+  category?: string;
   linkColor?: string;
   availabilityStatus: string;
+  // discountPercentage?: string;
+  minimumOrderQuantity?: number;
+  shippingInformation?: string;
+  weightInput?: number;
+  returnPolicy?: string;
+  sku?: string;
+  tumbnaill?: Array<{ url: string }>;
+
   reviews?: {
     reviewerName: string;
     comment: string;
@@ -24,6 +39,12 @@ export interface IProduct {
   brandInput?: string;
   SKUInput?: string;
   stockInput?: number;
+  returnPolicyInput?: string;
+  minimumOrderQuantityInput?: number;
+  shippingInformationInput?: string;
+  thumbnailInput?: string;
+  thumbnail?: string;
+  discountPercentageInput?: number;
 }
 export interface ICartItem {
   cart: {
@@ -65,4 +86,8 @@ export interface ISettingsState {
   onOpen: () => void;
   onClose: () => void;
   deleteAction: () => void;
+}
+export interface IContentOfProduct {
+  register: UseFormRegister<IProduct>;
+  errors: FieldErrors<IProduct>;
 }
